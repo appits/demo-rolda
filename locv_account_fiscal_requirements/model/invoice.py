@@ -25,7 +25,7 @@ class AccountMove(models.Model):
              " need to put here this number to be able to declarate on"
              " Fiscal reports correctly.", store=True)
 
-    loc_req = fields.Boolean(string='Required by Localization', default=lambda s: s._get_loc_req(),
+    loc_req = fields.Boolean(string='Maquina Fiscal?', default=lambda s: s._get_loc_req(),
                              help='This fields is for technical use')
 
     sin_cred = fields.Boolean(
@@ -57,7 +57,7 @@ class AccountMove(models.Model):
     paper_anu = fields.Boolean('Papel Dañado', defeult=False)
     marck_paper = fields.Boolean(default=False)
 
-
+    maq_fiscal_p = fields.Boolean('Maquina Fiscal', default=False)
 
     def _get_journal(self, context):
         """ Return the journal which is
@@ -187,11 +187,12 @@ class AccountMove(models.Model):
                 return {'warning': {'title': "Advertencia!",
                                     'message': "  El Numero de la Factura del Proveedor ya Existe  "}}
         if vals.get('nro_ctrl', False):
-            nro_ctrl_id = self._unique_invoice_per_partner('nro_ctrl', vals.get('nro_ctrl', False))
-            if not nro_ctrl_id:
-                self.nro_ctrl = False
-                return {'warning': {'title': "Advertencia!",
-                                    'message': "  El Numero de control de la Factura del Proveedor ya Existe  "}}
+            if self.maq_fiscal_p == False:
+                nro_ctrl_id = self._unique_invoice_per_partner('nro_ctrl', vals.get('nro_ctrl', False))
+                if not nro_ctrl_id:
+                    self.nro_ctrl = False
+                    return {'warning': {'title': "Advertencia!",
+                                        'message': "  El Numero de control de la Factura del Proveedor ya Existe  "}}
 
 
         return super(AccountMove, self).write(vals)
@@ -208,11 +209,12 @@ class AccountMove(models.Model):
     @api.onchange('nro_ctrl')
     def onchange_nro_ctrl(self):
         if self.nro_ctrl:
-            nro_ctrl_id = self._unique_invoice_per_partner('nro_ctrl',self.nro_ctrl)
-            if not nro_ctrl_id:
-                self.nro_ctrl = False
-                return {'warning': {'title': "Advertencia!",
-                                    'message': "  El Numero de control de la Factura del Proveedor ya Existe  "}}
+            if self.maq_fiscal_p == False:
+                nro_ctrl_id = self._unique_invoice_per_partner('nro_ctrl',self.nro_ctrl)
+                if not nro_ctrl_id:
+                    self.nro_ctrl = False
+                    return {'warning': {'title': "Advertencia!",
+                                        'message': "  El Numero de control de la Factura del Proveedor ya Existe  "}}
 
 class AccountInvoiceTax(models.Model):
     _inherit = 'account.tax'
