@@ -226,7 +226,9 @@
                         <field name="account_id" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}" options="{'no_open': True, 'no_quick_create': True, 'no_create_edit' : True}"/>
                         <field name="name" select="2" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"/>
                         <field name="period_id" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"/>
-                         <field name="number" attrs="{'readonly': [('type', 'in', ('in_invoice','in_refund'))]}" force_save="1" />
+                        <field name="number" required="1"/>
+<!--                         <field name="number"  invisible="1"/>-->
+
                         <field name="date" attrs="{'readonly':[('type','=','out_invoice')],'required':[('type','in',['in_invoice','in_refund'])]}"/>
                         <newline/>
 
