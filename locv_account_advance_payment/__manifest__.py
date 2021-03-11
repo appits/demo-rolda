@@ -8,8 +8,9 @@
 Registro de Anticipos para ser aplicados a las facturas de clientes y proveedores,
 asi como los reversos de los mismos.
 ============================
+Colaborador: Maria Carreno
 ''',
-    'author': 'Localizacion Venezolana',
+    'author': 'locv',
     'website': '',
     #data, es una lista donde se agregan todas las vistas del módulo, es decir los archivos.xml y archivos.csv.
     'data': [
