@@ -408,6 +408,7 @@ class AccountMove(models.Model):
                      'in_refund': -1}
             direction = types[invoice.type]
             print("to_wh: ",to_wh)
+            amount_ret2 = 0
             for tax_brw in to_wh:
                 if 'invoice' in invoice.type:
                     #acc = (tax_brw.tax_id.account_id and
@@ -425,21 +426,22 @@ class AccountMove(models.Model):
                         _('¡Falta una cuenta en impuestos!'),
                         _("El impuesto [% s] tiene una cuenta faltante. Por favor, complete el "
                           "campos faltantes") % (tax_brw.name))
-                res.append((0, 0, {
-                    'debit':
-                    direction * tax_brw.amount_ret < 0 and
-                    direction * tax_brw.amount_ret,
-                    'credit':
-                    direction * tax_brw.amount_ret > 0 and
-                    direction * tax_brw.amount_ret,
-                    'account_id': acc,
-                    'partner_id': acc_part_id.id,
-                    'ref': invoice.name,
-                    'date': date,
-                    'currency_id': False,
-                    'name': name,
-                    'amount_residual': direction * tax_brw.amount_ret
-                }))
+                amount_ret2 += tax_brw.amount_ret
+            res.append((0, 0, {
+                'debit':
+                direction * amount_ret2 < 0 and
+                direction * amount_ret2,
+                'credit':
+                direction * amount_ret2 > 0 and
+                direction * amount_ret2,
+                'account_id': acc,
+                'partner_id': acc_part_id.id,
+                'ref': invoice.name,
+                'date': date,
+                'name': name,
+                'amount_residual': direction * amount_ret2,
+                'currency_id':False,
+            }))
             #self.residual = self.residual - tax_brw.amount_ret
             #self.residual_company_signed = self.residual_company_signed - tax_brw.amount_ret
         return res
