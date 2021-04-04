@@ -1,4 +1,8 @@
 [submodule "OCA/product-attribute"]
 	path = OCA/product-attribute
 	url = git@github.com:OCA/product-attribute.git
+
+[submodule "OCA/product-pack"]
+	path = OCA/product-pack
+	url = git@github.com:OCA/product-pack.git
 	branch = 13.0
