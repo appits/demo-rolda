@@ -7,3 +7,4 @@ from . import account
 from . import invoice
 from . import generate_txt
 from . import installer
+from . import journal
