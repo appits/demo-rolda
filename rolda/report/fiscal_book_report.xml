@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <template id="report_fiscal_sale_book_rolda" inherit_id="locv_fiscal_book.report_fiscal_sale_book">
+    <xpath expr="//table[hasclass('table')]/thead/tr" position="inside">
+      <th class="text-center" style="border: 1px solid #000000; width:75px;">% de retención</th>
+      <th class="text-center" style="border: 1px solid #000000; width:150px;">IVA percibido</th>
+    </xpath>
+    <xpath expr="//table[hasclass('table')]/tbody/tr[1]" position="inside">
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+    </xpath>
+    <xpath expr="//table[hasclass('table')]/tbody/tr[2]" position="inside">
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+    </xpath>
+    <xpath expr="//table[hasclass('table')]/tbody/tr[3]" position="inside">
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+    </xpath>
+    <xpath expr="//table[hasclass('table')]/tbody/tr[4]" position="inside">
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+    </xpath>
+    <xpath expr="//table[hasclass('table')]/tbody/tr[5]" position="inside">
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+    </xpath>
+    <xpath expr="//table[hasclass('table')]/tbody/tr[6]" position="inside">
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+      <td class="text-center" style="border: 1px solid #000000;"></td>
+    </xpath>
+  </template>
+</odoo>
