@@ -9,6 +9,7 @@
     'data': [
         'views/assets.xml',
         'views/res_partner_views.xml',
+        'report/rolda_reports.xml',
         'report/fiscal_purchase_book_report.xml',
         'report/fiscal_book_report.xml',
         'report/report_invoice.xml',

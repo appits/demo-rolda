@@ -16,6 +16,7 @@ table.o_main_table {
     }
     tbody {
         // color: #000;
+        font-size: 11px;
         tr:first-child td {
             border-top: 1px solid $o-company-secondary-color;
         }
@@ -34,6 +35,7 @@ table.o_main_table {
     }
 }
 
-.page {
+.page,
+.footer {
     font-size: 12px;
 }
