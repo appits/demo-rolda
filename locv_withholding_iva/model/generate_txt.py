@@ -104,14 +104,14 @@ class TxtIva(models.Model):
         res = [(r.id, r.name) for r in self]
         return res
 
-    
+
     def action_anular(self):
         """ Return document state to draft
         """
         self.write({'state': 'draft'})
         return True
 
-    
+
     def check_txt_ids(self): #, cr, uid, ids, context=None
         """ Check that txt_iva has lines to process."""
         for awi in self:
@@ -121,7 +121,7 @@ class TxtIva(models.Model):
                     _("Faltan líneas TXT de IVA !!!"))
         return True
 
-    
+
     def action_confirm(self):
         """ Transfers the document status to confirmed
         """
@@ -130,7 +130,7 @@ class TxtIva(models.Model):
         return True
 
 
-    
+
     def action_generate_lines_txt(self):
         """ Current lines are cleaned and rebuilt
         """
@@ -401,7 +401,7 @@ class TxtIva(models.Model):
 
         return str(split_date[0]) + str(split_date[1])
 
-    
+
     def generate_txt(self):
         """ Return string with data of the current document
         """
@@ -432,7 +432,7 @@ class TxtIva(models.Model):
                     else:
                         buyer = ' '
                     if txt_line.partner_id.company_type == 'person':
-                        vendor = vendor
+                        vendor = vendor.replace("-", "")
                     else:
                         if vendor:
                             vendor = vendor.replace("-", "")
@@ -487,7 +487,7 @@ class TxtIva(models.Model):
                     + '\t' + expediente + '\n')
         return txt_string
 
-    
+
     def _write_attachment(self, root):
         """ Encrypt txt, save it to the db and view it on the client as an
         attachment
@@ -509,7 +509,7 @@ class TxtIva(models.Model):
         msg = _("File TXT %s generated.") % (name)
         self.message_post(body=msg)
 
-    
+
     def action_done(self):
         """ Transfer the document status to done
         """
