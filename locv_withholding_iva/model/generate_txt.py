@@ -8,11 +8,9 @@ from odoo import models, fields, api, exceptions, _
 from odoo.addons import decimal_precision as dp
 
 
-
 class TxtIva(models.Model):
     _name = "txt.iva"
     _inherit = ['mail.thread']
-
 
     @api.model
     def _default_period_id(self):
@@ -21,8 +19,6 @@ class TxtIva(models.Model):
         fecha = time.strftime('%m/%Y')
         periods = self.env['account.period'].search([('code', '=', fecha)])
         return periods and periods[0].id or False
-
-
 
     name = fields.Char(
         string='Descripción', size=128, required=True, select=True,
@@ -55,8 +51,7 @@ class TxtIva(models.Model):
     txt_ids = fields.One2many(
         'txt.iva.line', 'txt_id',
         states={'draft': [('readonly', False)]},
-        help='Txt líneas de campo de ar requeridas por SENIAT para '
-        'Retención de IVA')
+        help='Txt líneas de campo de ar requeridas por SENIAT para Retención de IVA')
     amount_total_ret = fields.Float(
         string='Monto Total Retenido',
      #   compute='_get_amount_total',
@@ -66,13 +61,12 @@ class TxtIva(models.Model):
      #   compute='_get_amount_total_base',
         help="Total de la Base Imponible")
     txt_name = fields.Char('Nombre Archivo')
-    txt_file = fields.Binary('Descargar TXT', states={'done': [('invisible', False)]} )
+    txt_file = fields.Binary('Descargar TXT', states={'done': [('invisible', False)]})
 
     def _get_amount_total(self):
         """ Return total amount withheld of each selected bill
         """
         res = {}
-
         for txt in self.browse(self.ids):
             res[txt.id] = 0.0
             if txt.create_date != False:
@@ -97,13 +91,11 @@ class TxtIva(models.Model):
                         res[txt.id] += txt_line.untaxed
         return res
 
-
     def name_get(self):
         """ Return a list with id and name of the current register
         """
         res = [(r.id, r.name) for r in self]
         return res
-
 
     def action_anular(self):
         """ Return document state to draft
@@ -111,8 +103,7 @@ class TxtIva(models.Model):
         self.write({'state': 'draft'})
         return True
 
-
-    def check_txt_ids(self): #, cr, uid, ids, context=None
+    def check_txt_ids(self):
         """ Check that txt_iva has lines to process."""
         for awi in self:
             if not awi.txt_ids:
@@ -121,15 +112,12 @@ class TxtIva(models.Model):
                     _("Faltan líneas TXT de IVA !!!"))
         return True
 
-
     def action_confirm(self):
         """ Transfers the document status to confirmed
         """
         self.check_txt_ids()
         self.write({'state': 'confirmed'})
         return True
-
-
 
     def action_generate_lines_txt(self):
         """ Current lines are cleaned and rebuilt
@@ -141,8 +129,8 @@ class TxtIva(models.Model):
         txt_brw = self.browse(self.ids)
         txt_ids = txt_iva_obj.search([('txt_id', '=', txt_brw.id)])
         if txt_ids:
-            for txt in txt_ids: txt.unlink()
-
+            for txt in txt_ids:
+                txt.unlink()
         if txt_brw.type:
             vouchers = voucher_obj.search([
                 ('date_ret', '>=', txt_brw.date_start),
@@ -157,13 +145,8 @@ class TxtIva(models.Model):
                 #('period_id', '=', txt_brw.period_id.id),
                 ('state', '=', 'done'),
                 ('type', 'in', ['out_invoice', 'out_refund'])])
-        amount_total =0
-        base_total = 0
-        amount_exento = 0
-        amount = 0
-        base = 0
+        amount_total = base_total = amount_exento = amount = base = 0
         for voucher in vouchers:
-
             acc_part_id = rp_obj._find_accounting_partner(voucher.partner_id)
             for voucher_lines in voucher.wh_lines:
                 for voucher_tax_line in voucher_lines.tax_line:
@@ -219,14 +202,12 @@ class TxtIva(models.Model):
                 #          'amount_sdcf': amount_exento, #self.get_amount_scdf(voucher_lines),
                 #          'tax_wh_iva_id': self.get_alicuota_iva(voucher_lines),
                 #          })
-
-
                 # else:
                 #
                 #         self.update({'amount_total_ret': amount_total,
                 #                      'amount_total_base': base_total})
-
         return True
+
     # @api.model
     # def get_amount_scdf(self,voucher_lines):
     #     amount_sdcf = 0.0
@@ -237,11 +218,11 @@ class TxtIva(models.Model):
     #         if line_tax.name in ['Exento','Exento (compras)','exento','exento (compras)','Exento (Compras)']:
     #             amount_sdcf = line_tax.base
     #     return amount_sdcf
+
     @api.model
-    def get_alicuota_iva(self,voucher_lines):
+    def get_alicuota_iva(self, voucher_lines):
         line_tax_obj = self.env['account.wh.iva.line.tax']
         line_tax_bw = line_tax_obj.search([('wh_vat_line_id', '=', voucher_lines.id)])
-
         for line_tax in line_tax_bw:
             if line_tax.amount != 0.0:
                 tax_id = line_tax.id
@@ -253,11 +234,10 @@ class TxtIva(models.Model):
         @param txt: current txt document
         @param txt_line: One line of the current txt document
         """
-        rp_obj = self.env['res.partner']
         vat_company = txt.company_id.partner_id.vat
         vat_partner = txt_line.partner_id.vat
         if vat_partner == False:
-            nationality= txt_line.partner_id.nationality
+            nationality = txt_line.partner_id.nationality
             cedula = txt_line.partner_id.identification_id
             if nationality and cedula:
                 if nationality == 'V' or nationality == 'E':
@@ -282,7 +262,7 @@ class TxtIva(models.Model):
                 or txt_line.invoice_id.name.find("NC") != -1 or txt_line.invoice_id.name.find("nc") != -1:
             number = txt_line.invoice_id.supplier_invoice_number
         elif txt_line.invoice_id:
-             number = '0'
+            number = '0'
         return number
 
     @api.model
@@ -332,14 +312,13 @@ class TxtIva(models.Model):
         @param txt_line: line of the current document
         """
         inv_type = '03'
-        if txt_line.invoice_id.type in ['out_invoice', 'in_invoice'] and txt_line.invoice_id.partner_id.people_type_company != 'pjnd' :
+        if txt_line.invoice_id.type in ['out_invoice', 'in_invoice'] and txt_line.invoice_id.partner_id.people_type_company != 'pjnd':
             inv_type = '01'
         elif txt_line.invoice_id.type in ['out_invoice', 'in_invoice'] and \
                 txt_line.invoice_id.name:
             inv_type = '02'
         if txt_line.invoice_id.partner_id.company_type == 'company' and txt_line.invoice_id.partner_id.people_type_company == 'pjnd':
             inv_type = '05'
-
         return inv_type
 
     @api.model
@@ -353,19 +332,13 @@ class TxtIva(models.Model):
     @api.model
     def get_amount_line(self, txt_line, amount_exempt):
         """Method to compute total amount"""
-        ali_max = 0
-        exempt = 0
-
-        alic_porc = 0
+        ali_max = exempt = alic_porc = 0
         busq = self.env['account.tax'].search([('name', '=', txt_line.tax_wh_iva_id)])
         if busq:
             alic_porc = busq.amount
         if ali_max == alic_porc:
             exempt = amount_exempt
-
-        total = (txt_line.untaxed + txt_line.amount_withheld +
-                     exempt)
-
+        total = (txt_line.untaxed + txt_line.amount_withheld + exempt)
         return total, exempt
 
     @api.model
@@ -374,8 +347,7 @@ class TxtIva(models.Model):
         amounts
         @param txt_line: One line of the current txt document
         """
-        tax = 0
-        amount_doc = 0
+        tax = amount_doc = 0
         for tax_lines in txt_line.voucher_id.wh_lines.tax_line:
             if 'Exento (compras)' in tax_lines.name or (tax_lines.base and not tax_lines.amount):
                 tax = tax_lines.base + tax
@@ -388,57 +360,39 @@ class TxtIva(models.Model):
         """ Return aliquot of the withholding into line
         @param txt_line: One line of the current txt document
         """
-        busq = self.env['account.tax'].search([('name','=', txt_line.tax_wh_iva_id)])
-
+        busq = self.env['account.tax'].search([('name', '=', txt_line.tax_wh_iva_id)])
         alic_porc = 0
         if busq:
             alic_porc = busq.amount
-
         return int(alic_porc)
 
     def get_period(self, date):
         split_date = str(date).split('-')
-
         return str(split_date[0]) + str(split_date[1])
-
 
     def generate_txt(self):
         """ Return string with data of the current document
         """
         txt_string = ''
-        rp_obj = self.env['res.partner']
         for txt in self:
             expediente = '0'
             vat = txt.company_id.partner_id.vat
             vat = vat
-            amount_total11 =0
+            amount_total11 = 0
             for txt_line in txt.txt_ids:
                 vendor, buyer = self.get_buyer_vendor(txt, txt_line)
-                if txt_line.invoice_id.type in ['out_invoice','out_refund']:
-                    if vendor:
-                        vendor = vendor.replace("-", "")
-                    else:
-                        vendor = ''
+                if txt_line.invoice_id.type in ['out_invoice', 'out_refund']:
+                    vendor = vendor and vendor.replace("-", "") or ''
                     if txt_line.partner_id.company_type == 'person':
                         buyer = buyer
                     else:
-                        if buyer:
-                            buyer = buyer.replace("-", "")
-                        else:
-                            buyer = ''
+                        buyer = buyer and buyer.replace("-", "") or ''
                 else:
-                    if buyer:
-                        buyer = buyer.replace("-", "")
-                    else:
-                        buyer = ' '
+                    buyer = buyer and buyer.replace("-", "") or ' '
                     if txt_line.partner_id.company_type == 'person':
                         vendor = vendor.replace("-", "")
                     else:
-                        if vendor:
-                            vendor = vendor.replace("-", "")
-                        else:
-                            vendor = ''
-
+                        vendor = vendor and vendor.replace("-", "") or ''
                 period = self.get_period(txt.date_start)
                 # TODO: use the start date of the period to get the period2
                 # with the 'YYYYmm'
@@ -450,7 +404,7 @@ class TxtIva(models.Model):
                 control_number = self.get_number(
                     txt_line.invoice_id.nro_ctrl, 'inv_ctrl', 20)
                 document_affected = self.get_document_affected(txt_line)
-                document_affected = document_affected.replace("-","") if document_affected else '0'
+                document_affected = document_affected.replace("-", "") if document_affected else '0'
                 voucher_number = self.get_number(
                     txt_line.voucher_id.number, 'vou_number', 14)
                 amount_exempt, amount_untaxed = \
@@ -487,7 +441,6 @@ class TxtIva(models.Model):
                     + '\t' + expediente + '\n')
         return txt_string
 
-
     def _write_attachment(self, root):
         """ Encrypt txt, save it to the db and view it on the client as an
         attachment
@@ -509,17 +462,15 @@ class TxtIva(models.Model):
         msg = _("File TXT %s generated.") % (name)
         self.message_post(body=msg)
 
-
     def action_done(self):
         """ Transfer the document status to done
         """
         root = self.generate_txt()
         self._write_attachment(root)
         self.write({'state': 'done'})
-
         return True
 
-    def formato_cifras(self,monto):
+    def formato_cifras(self, monto):
         cds = '0'
         monto = str(monto)
         if monto =='0':
@@ -534,8 +485,10 @@ class TxtIva(models.Model):
         montofinal = monto + imprimir0
         return montofinal
 
+
 class TxtIvaLine(models.Model):
     _name = "txt.iva.line"
+    _rec_name = 'partner_id'
 
     partner_id = fields.Many2one(
         'res.partner', string='Comprador/Vendedor', readonly=True,
@@ -560,6 +513,4 @@ class TxtIvaLine(models.Model):
     # tax_wh_iva_id = fields.Many2one(
     #     'account.wh.iva.line.tax', string='Líneas de impuesto de Retención de IVA')
     tax_wh_iva_id = fields.Char(
-              string='Líneas de impuesto de Retención de IVA', readonly=True)
-
-    _rec_name = 'partner_id'
+        string='Líneas de impuesto de Retención de IVA', readonly=True)
