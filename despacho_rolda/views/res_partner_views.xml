@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="despacho_view_partner_form" model="ir.ui.view">
+    <field name="name">despacho.res.partner.form</field>
+    <field name="model">res.partner</field>
+    <field name="priority" eval="70"/>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <field name="vat" position="after">
+        <field name="is_transport"/>
+        <field name="vehicle_license_plate" attrs="{'invisible': [('is_transport', '=', False)]}"/>
+      </field>
+    </field>
+  </record>
+</odoo>
