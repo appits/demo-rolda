@@ -1,7 +1,7 @@
 {
-    'name': 'Despacho',
+    'name': 'Despacho Rolda',
     'version': '13.0.0.0.1',
-    'depends': ['stock', 'account'],
+    'depends': ['rolda', 'stock', 'account'],
     'author': 'Keiver Peña',
     'license': 'AGPL-3',
     'website': 'https://gitlab.com/keiverobles',
