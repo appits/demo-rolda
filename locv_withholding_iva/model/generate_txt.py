@@ -376,16 +376,12 @@ class TxtIva(models.Model):
         txt_string = ''
         for txt in self:
             expediente = '0'
-            vat = txt.company_id.partner_id.vat
-            vat = vat
             amount_total11 = 0
             for txt_line in txt.txt_ids:
                 vendor, buyer = self.get_buyer_vendor(txt, txt_line)
                 if txt_line.invoice_id.type in ['out_invoice', 'out_refund']:
                     vendor = vendor and vendor.replace("-", "") or ''
-                    if txt_line.partner_id.company_type == 'person':
-                        buyer = buyer
-                    else:
+                    if txt_line.partner_id.company_type != 'person':
                         buyer = buyer and buyer.replace("-", "") or ''
                 else:
                     buyer = buyer and buyer.replace("-", "") or ' '
@@ -426,19 +422,25 @@ class TxtIva(models.Model):
                 alicuota2 = alicuota
                 if document_type == '05':
                     expediente = str(txt_line.invoice_id.nro_expediente_impor)
-                txt_string = (
-                    txt_string + buyer + '\t' + period + '\t'
-                    + (str(txt_line.invoice_id.date)) + '\t' + operation_type +
-                    '\t' + document_type + '\t' + vendor + '\t' +
-                    document_number + '\t' + control_number + '\t' +
-                    self.formato_cifras(amount_total2) + '\t' +
-                    #self.formato_cifras(txt_line.untaxed2) + '\t' +
-                    self.formato_cifras(amount_untaxed) + '\t' +
-                    self.formato_cifras(txt_line.amount_withheld2) + '\t' +
-                    document_affected
-                    + '\t' + voucher_number + '\t' +
-                    self.formato_cifras(amount_exempt2) + '\t' + self.formato_cifras(alicuota2)
-                    + '\t' + expediente + '\n')
+                txt_string += '{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(
+                    buyer,
+                    period,
+                    str(txt_line.invoice_id.date),
+                    operation_type,
+                    document_type,
+                    vendor,
+                    document_number,
+                    control_number,
+                    self.formato_cifras(amount_total2),
+                    # self.formato_cifras(txt_line.untaxed2),
+                    self.formato_cifras(amount_untaxed),
+                    self.formato_cifras(txt_line.amount_withheld2),
+                    document_affected,
+                    voucher_number,
+                    self.formato_cifras(amount_exempt2),
+                    self.formato_cifras(alicuota2),
+                    expediente
+                )
         return txt_string
 
     def _write_attachment(self, root):
