@@ -23,6 +23,9 @@
     <field name="model">despacho.despacho</field>
     <field name="arch" type="xml">
       <form string="Despacho">
+        <header>
+          <button name="%(action_despacho_print_guide)s" string="Imprimir Guía" type="action" class="btn-primary oe_read_only"/>
+        </header>
         <sheet>
           <div class="oe_title">
             <label for="name" class="oe_edit_only"/>
@@ -54,7 +57,22 @@
           </group>
           <notebook>
             <page string="Detalle" name="page_detail">
-              <!-- <field name="line_ids" nolabel="1"/> -->
+              <field name="line_ids" nolabel="1" domain="[('type', 'in', ['out_invoice', 'out_refund'])]">
+                <tree>
+                  <field name="partner_id"/>
+                  <field name="name"/>
+                  <field name="invoice_origin"/>
+                  <!-- <field name="partner_city"/> -->
+                  <field name="total_qty"/>
+                  <field name="total_weight"/>
+                  <field name="date" optional="hide"/>
+                  <field name="ref" optional="hide"/>
+                  <field name="journal_id" optional="hide"/>
+                  <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                  <field name="state" optional="hide"/>
+                  <field name="currency_id" invisible="1"/>
+                </tree>
+              </field>
             </page>
           </notebook>
         </sheet>

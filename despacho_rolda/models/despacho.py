@@ -8,6 +8,7 @@ class Despacho(models.Model):
 
     name = fields.Char('Nombre', default='Nuevo', readonly=True)
     date = fields.Datetime('Fecha', default=fields.Datetime.now, help='Fecha en la cual se está realizando el registro de la orden de despacho.')
+    # partner_id = fields.Many2one('res.partner', 'Cliente')
     transport_company_id = fields.Many2one('res.partner', 'Compañía de transporte')
     license_plate = fields.Char(related='transport_company_id.vehicle_license_plate')
     driver_id = fields.Many2one('res.partner', 'Chofer')
@@ -16,7 +17,7 @@ class Despacho(models.Model):
     vat_assistant = fields.Char(related='assistant_id.identification_id', string='CI')
     seal = fields.Char('Precinto', help='Número de precinto relativo a la orden de despacho a realizar.')
     notes = fields.Text('Observaciones')
-    # line_ids = fields.One2many('account.move', 'despacho_id', 'Facturas')
+    line_ids = fields.Many2many('account.move', 'move_despacho_rel', 'despacho_id', 'move_id', 'Facturas')
     user_id = fields.Many2one('res.users', 'Responsable', default=lambda self: self.env.user)
     active = fields.Boolean('Activo', default=True)
 
