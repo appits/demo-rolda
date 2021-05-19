@@ -18,19 +18,18 @@
       <div class="row">
         <div class="col-3 mb4">
           <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 85px;" alt="Logo"/>
+          <div><t t-esc="company.country_id.vat_label or 'R.I.F.'"/>: <span t-field="company.vat"/></div>
         </div>
-        <div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
-      </div>
-      <div t-if="company.logo or company.report_header" class="row zero_min_height">
-        <div class="col-12">
-          <div style="border-bottom: 1px solid black;"/>
+        <div t-esc="title" class="h3 col-6 text-center" style="margin-top:42px;"/>
+        <div t-esc="left_header" class="col-3 text-right font-weight-bold" style="margin-top:22px;"/>
+        <div t-if="report_type == 'pdf'" class="text-muted">
+          Página: <span class="page"/> de <span class="topage"/>
         </div>
       </div>
       <div class="row">
-        <div class="col-6" name="company_address">
-          <div t-field="company.partner_id"
-            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
-          />
+        <div class="col-12" name="company_address">
+          <div><span t-field="company.partner_id.name"/>, T.L.F: <span t-field="company.phone"/></div>
+          <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
         </div>
       </div>
     </div>
@@ -41,20 +40,32 @@
     </div>
 
     <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
-      <div class="text-center" style="border-top: 1px solid black;">
-        <ul class="list-inline mb4">
-          <!-- using the list-inline-item class from bootstrap causes weird behaviours in pdf report
-               adding d-inline class fixes the problem-->
-          <li t-if="company.phone" class="list-inline-item d-inline">Phone: <span t-field="company.phone"/></li>
-          <li t-if="company.email" class="list-inline-item d-inline">Email: <span t-field="company.email"/></li>
-          <li t-if="company.website" class="list-inline-item d-inline">Web: <span t-field="company.website"/></li>
-          <li t-if="company.vat" class="list-inline-item d-inline"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
-        </ul>
-        <div name="financial_infos">
-          <span t-field="company.report_footer"/>
-        </div>
-        <div t-if="report_type == 'pdf'" class="text-muted">
-          Page: <span class="page"/> / <span class="topage"/>
+      <div>
+        <div name="sign_infos">
+          <span>Observaciones Generales: <span t-esc="despacho['notes']"/> </span><span>Precinto: <span t-esc="seal"/></span>
+          <table class="table table-rolda-footer" style="page-break-inside: avoid;">
+            <tr>
+              <td class="w-20">Aprobación logística</td>
+              <td class="w-20">Preparador</td>
+              <td class="w-20">Chequeador</td>
+              <td class="w-20">Conforme transportista</td>
+              <td class="w-20">Retorno de facturas despachadas</td>
+            </tr>
+            <tr>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+            </tr>
+            <tr>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -63,116 +74,57 @@
   <template id="report_despacho_consolidated_document">
     <t t-call="web.html_container">
       <t t-call="despacho_rolda.despacho_layout_standard">
-          <div class="oe_structure"/>
-          <div class="page">
-            <table class="table table-bordered">
+        <t t-set="title" t-value="'GUÍA DE DESPACHO'"/>
+        <t t-set="left_header" t-value="'Número de Guía: {}'.format(despacho['name'])"/>
+        <t t-set="seal" t-value="despacho['seal']"/>
+        <div class="oe_structure"/>
+        <div class="page">
+          <table class="table table-bordered border-black">
+            <tr>
+              <td>Compañía de transporte: <span t-esc="despacho['transport_name']"/></td>
+              <td>Vehículo: <span t-esc="despacho['license']"/></td>
+            </tr>
+            <tr>
+              <td>Chofer: <span t-esc="despacho['driver_name']"/></td>
+              <td>Ayudante: <span t-esc="despacho['assistant_name']"/></td>
+            </tr>
+            <tr>
+              <td>C.I.: <span t-esc="despacho['driver_vat']"/></td>
+              <td>C.I.: <span t-esc="despacho['assistant_vat']"/></td>
+            </tr>
+          </table>
+          <table class="table table-bordered border-black">
+            <thead>
               <tr>
-                <td>Compañía de transporte:</td>
-                <td>Vehículo:</td>
+                <th class="text-left"><span>Nro. Factura</span></th>
+                <th class="text-left"><span>Cliente</span></th>
+                <th class="text-left"><span>Ciudad</span></th>
+                <th class="text-left text-nowrap"><span>Bultos</span></th>
+                <th class="text-left"><span>Kg.</span></th>
+                <th class="text-left"><span>Observaciones</span></th>
               </tr>
-              <tr>
-                <td><span t-esc="despacho['transport_name']"/></td>
-                <td><span t-esc="despacho['license']"/></td>
-              </tr>
-            </table>
-            <table class="table table-bordered">
-              <tr>
-                <td>
-                  Chofer:<br/>
-                  C.I.:
-                </td>
-                <td>
-                  <span t-esc="despacho['driver_name']"/><br/>
-                  <span t-esc="despacho['driver_vat']"/>
-                </td>
-                <td>
-                  Ayudante:<br/>
-                  C.I.:
-                </td>
-                <td>
-                  <span t-esc="despacho['assistant_name']"/><br/>
-                  <span t-esc="despacho['assistant_vat']"/>
-                </td>
-              </tr>
-            </table>
-            <table class="table table-bordered o_main_table">
-              <thead>
+            </thead>
+            <tbody class="invoice_tbody">
+              <t t-set="total_weight" t-value="0.0"/>
+              <t t-set="total_rows" t-value="len(despacho['lines'])"/>
+              <t t-foreach="despacho['lines']" t-as="line">
                 <tr>
-                  <th class="text-left"><span>Nro. Factura</span></th>
-                  <th class="text-left"><span>Cliente</span></th>
-                  <th class="text-left"><span>Ciudad</span></th>
-                  <th t-attf-class="text-left text-nowrap {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Bultos</span></th>
-                  <th class="text-left"><span>Kg.</span></th>
-                  <th class="text-left"><span>Observaciones</span></th>
+                  <td class="text-center"><span t-esc="line['name']"/></td>
+                  <td><span t-esc="line['partner_name']"/></td>
+                  <td><span t-esc="line['partner_city']"/></td>
+                  <td class="text-right"><span t-esc="line['quantity']"/></td>
+                  <td class="text-right"><span t-esc="line['weight']"/></td>
+                  <td/>
+                  <!-- <td t-att-rowspan="total_rows"><span t-esc="despacho['notes']" t-options="{'widget': 'text'}"/></td> -->
                 </tr>
-              </thead>
-              <tbody class="invoice_tbody">
-                <t t-set="total_weight" t-value="0.0"/>
-                <t t-set="total_rows" t-value="len(despacho['lines'])"/>
-                <t t-foreach="despacho['lines']" t-as="line">
-                  <tr>
-                    <td><span t-esc="line['name']"/></td>
-                    <td><span t-esc="line['partner_name']"/></td>
-                    <td><span/></td>
-                    <td class="text-right"><span t-esc="line['quantity']"/></td>
-                    <td class="text-right"><span t-esc="line['weight']"/></td>
-                    <td/>
-                    <!-- <td t-att-rowspan="total_rows"><span t-esc="despacho['notes']" t-options="{'widget': 'text'}"/></td> -->
-                  </tr>
-                  <t t-set="total_weight" t-value="total_weight + line['weight']"/>
-                </t>
-              </tbody>
-            </table>
-            <div class="w-50 text-right">
-              <span>Peso Total: <t t-esc="'{:,.2f}'.format(total_weight)"/></span>
-            </div>
-<!--         <div class="clearfix">
-          <div id="total" class="row">
-            <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
-              <table class="table table-sm" style="page-break-inside: avoid;">
-                <tr class="border-black o_subtotal" style="">
-                  <td><strong>Subtotal</strong></td>
-                  <td class="text-right">
-                    <span t-field="o.amount_untaxed"/>
-                  </td>
-                </tr>
-                <t t-foreach="o.amount_by_group" t-as="amount_by_group">
-                  <tr style="">
-                    <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) == 1 and o.amount_untaxed == amount_by_group[2]">
-                      <td><span class="text-nowrap" t-esc="amount_by_group[0]"/></td>
-                      <td class="text-right o_price_total">
-                        <span class="text-nowrap" t-esc="amount_by_group[3]" />
-                      </td>
-                    </t>
-                    <t t-else="">
-                      <td>
-                        <span t-esc="amount_by_group[0]"/>
-                        <span class="text-nowrap"> en
-                          <t t-esc="amount_by_group[4]"/>
-                        </span>
-                      </td>
-                      <td class="text-right o_price_total">
-                        <span class="text-nowrap" t-esc="amount_by_group[3]"/>
-                      </td>
-                    </t>
-                  </tr>
-                </t>
-                <tr class="border-black o_total">
-                  <td><strong>Total</strong></td>
-                  <td class="text-right">
-                    <span class="text-nowrap" t-field="o.amount_total"/>
-                  </td>
-                </tr>
-              </table>
-            </div>
+                <t t-set="total_weight" t-value="total_weight + line['weight']"/>
+              </t>
+            </tbody>
+          </table>
+          <div class="w-50 text-right">
+            <span>Peso Total: <t t-esc="'{:,.2f}'.format(total_weight)"/></span>
           </div>
-        </div> -->
         </div>
-<!--       <div class="footer">
-        <div class="clearfix text-center">
-          <p class="bg-light">Son <span class="text-uppercase" t-esc="o.currency_id.amount_to_text(o.amount_total)"/></p>
-        </div>
-      </div> -->
       </t>
     </t>
   </template>

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="0">
     <record id="base.main_company" model="res.company">
-        <field name="name">Cosméticos Rolda</field>
+        <field name="name">Cosméticos Rolda C.A.</field>
         <field name="website">https://www.rolda.com/</field>
         <field name="email">ventas@rolda.com.ve</field>
         <field name="company_registry">Se fija en ti.</field>
-        <field name="phone">946 126 078</field>
-        <field name="street">Lomas de Urquía</field>
+        <field name="phone">0212-2132766</field>
+        <field name="street">Calle Industrias, 1ra Transversal Lomas de Urquía</field>
+        <field name="street2">Edificio Festpa P.B. local 5</field>
         <field name="city">Carrizal</field>
         <field name="zip">1203</field>
-        <field name="vat"></field>
+        <field name="vat">J-003672874</field>
         <field name="report_header"></field>
         <field name="report_footer"></field>
         <!-- <field name="state_id" ref="base.state_ve_mi"/>  # Miranda -->

@@ -62,7 +62,7 @@
                   <field name="partner_id"/>
                   <field name="name"/>
                   <field name="invoice_origin"/>
-                  <!-- <field name="partner_city"/> -->
+                  <field name="partner_city"/>
                   <field name="total_qty"/>
                   <field name="total_weight"/>
                   <field name="date" optional="hide"/>

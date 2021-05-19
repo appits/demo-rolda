@@ -26,12 +26,14 @@ class WzDespachoPrintGuide(models.TransientModel):
             'assistant_name': despacho.assistant_id.name,
             'assistant_vat': despacho.vat_assistant,
             'notes': despacho.notes,
+            'seal': despacho.seal,
             'lines': [],
         }
         for line in despacho.line_ids:
             vals['lines'].append({
                 'name': line.name,
                 'partner_name': line.partner_id.name,
+                'partner_city': line.partner_city,
                 'quantity': line.total_qty,
                 'weight': line.total_weight,
             })
