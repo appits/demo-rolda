@@ -1,0 +1,41 @@
+$o-company-secondary-color: rgb(0, 0, 0) !default;
+
+table.o_main_table {
+    margin-bottom: 0;
+    margin-top: 0;
+    thead {
+        color: $o-company-secondary-color;
+        tr th {
+            border-top: 1px solid $o-company-secondary-color !important;
+            padding: 0px;
+            // text-transform: uppercase;
+        }
+        tr th:first-child {
+            // width: 48%;
+        }
+    }
+    tbody {
+        // color: #000;
+        font-size: 11px;
+        tr:first-child td {
+            border-top: 1px solid $o-company-secondary-color;
+        }
+        tr:last-child td {
+            border-bottom: none;
+            // border-bottom: 3px solid $o-company-secondary-color;
+        }
+        tr {
+            td {
+                border-bottom: none !important;
+                padding: 0px !important;
+            }
+            td:last-child {
+            }
+        }
+    }
+}
+
+.page,
+.footer {
+    font-size: 12px;
+}

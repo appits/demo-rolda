@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="wz_despacho_print_guide_view_form" model="ir.ui.view">
+    <field name="name">wz.despacho.print.guide.form</field>
+    <field name="model">wz.despacho.print.guide</field>
+    <field name="arch" type="xml">
+      <form string="Imprimir guía de despacho">
+        <group>
+          <field name="option" widget="radio"/>
+        </group>
+        <footer>
+          <button name="print_report" string="Imprimir PDF" type="object" class="btn-primary"/>
+          <button string="Cancelar" type="object" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_despacho_print_guide" model="ir.actions.act_window">
+    <field name="name">Imprimir guía</field>
+    <field name="res_model">wz.despacho.print.guide</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+</odoo>
