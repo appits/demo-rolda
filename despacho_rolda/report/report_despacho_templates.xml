@@ -16,19 +16,19 @@
     </t>
     <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
       <div class="row">
-        <div class="col-3 mb4">
+        <div class="col-4 mb4">
           <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 85px;" alt="Logo"/>
           <div><t t-esc="company.country_id.vat_label or 'R.I.F.'"/>: <span t-field="company.vat"/></div>
         </div>
-        <div t-esc="title" class="h3 col-6 text-center" style="margin-top:42px;"/>
-        <div t-esc="left_header" class="col-3 text-right font-weight-bold" style="margin-top:22px;"/>
+        <div t-esc="title" class="h3 col-4 text-center font-weight-bold" style="margin-top:42px;"/>
+        <div t-esc="left_header" class="col-4 text-right font-weight-bold" style="margin-top:22px;"/>
         <div t-if="report_type == 'pdf'" class="text-muted">
           Página: <span class="page"/> de <span class="topage"/>
         </div>
       </div>
       <div class="row">
         <div class="col-12" name="company_address">
-          <div><span t-field="company.partner_id.name"/>, T.L.F: <span t-field="company.phone"/></div>
+          <div><span t-field="company.partner_id.name"/>, T.L.F.: <span t-field="company.phone"/></div>
           <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
         </div>
       </div>
@@ -43,7 +43,7 @@
       <div>
         <div name="sign_infos">
           <span>Observaciones Generales: <span t-esc="despacho['notes']"/> </span><span>Precinto: <span t-esc="seal"/></span>
-          <table class="table table-rolda-footer" style="page-break-inside: avoid;">
+          <table class="table table-rolda-footer" style="page-break-inside: avoid; font-size: 80%;">
             <tr>
               <td class="w-20">Aprobación logística</td>
               <td class="w-20">Preparador</td>
@@ -81,19 +81,19 @@
         <div class="page">
           <table class="table table-bordered border-black">
             <tr>
-              <td>Compañía de transporte: <span t-esc="despacho['transport_name']"/></td>
-              <td>Vehículo: <span t-esc="despacho['license']"/></td>
+              <td><strong>Compañía de transporte:</strong> <span t-esc="despacho['transport_name']"/></td>
+              <td><strong>Vehículo:</strong> <span t-esc="despacho['license']"/></td>
             </tr>
             <tr>
-              <td>Chofer: <span t-esc="despacho['driver_name']"/></td>
-              <td>Ayudante: <span t-esc="despacho['assistant_name']"/></td>
+              <td><strong>Chofer:</strong> <span t-esc="despacho['driver_name']"/></td>
+              <td><strong>Ayudante:</strong> <span t-esc="despacho['assistant_name']"/></td>
             </tr>
             <tr>
-              <td>C.I.: <span t-esc="despacho['driver_vat']"/></td>
-              <td>C.I.: <span t-esc="despacho['assistant_vat']"/></td>
+              <td><strong>C.I.:</strong> <span t-esc="despacho['driver_vat']"/></td>
+              <td><strong>C.I.:</strong> <span t-esc="despacho['assistant_vat']"/></td>
             </tr>
           </table>
-          <table class="table table-bordered border-black">
+          <table class="table table-despacho">
             <thead>
               <tr>
                 <th class="text-left"><span>Nro. Factura</span></th>
@@ -104,7 +104,7 @@
                 <th class="text-left"><span>Observaciones</span></th>
               </tr>
             </thead>
-            <tbody class="invoice_tbody">
+            <tbody>
               <t t-set="total_weight" t-value="0.0"/>
               <t t-set="total_rows" t-value="len(despacho['lines'])"/>
               <t t-foreach="despacho['lines']" t-as="line">
@@ -114,14 +114,14 @@
                   <td><span t-esc="line['partner_city']"/></td>
                   <td class="text-right"><span t-esc="line['quantity']"/></td>
                   <td class="text-right"><span t-esc="line['weight']"/></td>
-                  <td/>
+                  <td class="border-top-0"/>
                   <!-- <td t-att-rowspan="total_rows"><span t-esc="despacho['notes']" t-options="{'widget': 'text'}"/></td> -->
                 </tr>
                 <t t-set="total_weight" t-value="total_weight + line['weight']"/>
               </t>
             </tbody>
           </table>
-          <div class="w-50 text-right">
+          <div class="w-75 text-right">
             <span>Peso Total: <t t-esc="'{:,.2f}'.format(total_weight)"/></span>
           </div>
         </div>

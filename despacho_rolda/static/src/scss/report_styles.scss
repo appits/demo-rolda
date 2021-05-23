@@ -4,14 +4,22 @@
     border-color: black !important;
 }
 
+.table-despacho {
+    border: 1px solid black;
+    th {
+        border: 1px solid black !important;
+    }
+    td {
+        border-right: 1px solid black !important;
+    }
+}
 
 .table-rolda-footer {
     border: 1px solid black !important;
-}
-
-.table-rolda-footer td {
-    border: 0 !important;
-    border-left: 1px solid black !important;
+    td {
+        border: 0 !important;
+        border-left: 1px solid black !important;
+    }
 }
 
 .w-20 {
