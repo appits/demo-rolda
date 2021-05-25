@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="despacho_layout_standard">
+    <t t-if="not o" t-set="o" t-value="doc"/>
+    <t t-if="not company">
+      <!-- Multicompany -->
+      <t t-if="company_id">
+        <t t-set="company" t-value="company_id"/>
+      </t>
+      <t t-elif="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id.sudo()"/>
+      </t>
+      <t t-else="else">
+        <t t-set="company" t-value="res_company"/>
+      </t>
+    </t>
+    <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+      <div class="row">
+        <div class="col-4 mb4">
+          <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 85px;" alt="Logo"/>
+          <div><t t-esc="company.country_id.vat_label or 'R.I.F.'"/>: <span t-field="company.vat"/></div>
+        </div>
+        <div t-esc="title" class="h3 col-4 text-center font-weight-bold" style="margin-top:42px;"/>
+        <div class="col-4">
+          <div t-raw="left_header"/>
+          <div t-if="report_type == 'pdf'" class="text-muted">
+            Página: <span class="page"/> de <span class="topage"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" name="company_address">
+          <div><span t-field="company.partner_id.name"/>, T.L.F.: <span t-field="company.phone"/></div>
+          <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+        </div>
+      </div>
+    </div>
+
+    <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+      <t t-call="web.address_layout"/>
+      <t t-raw="0"/>
+    </div>
+
+    <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout" t-if="not no_footer">
+      <div>
+        <div name="sign_infos">
+          <span>Observaciones Generales: <span t-esc="despacho['notes']"/> </span><span>Precinto: <span t-esc="seal"/></span>
+          <table class="table table-rolda-footer" style="page-break-inside: avoid; font-size: 80%;">
+            <tr>
+              <td class="w-20">Aprobación logística</td>
+              <td class="w-20">Preparador</td>
+              <td class="w-20">Chequeador</td>
+              <td class="w-20">Conforme transportista</td>
+              <td class="w-20">Retorno de facturas despachadas</td>
+            </tr>
+            <tr>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+            </tr>
+            <tr>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </template>
+</odoo>

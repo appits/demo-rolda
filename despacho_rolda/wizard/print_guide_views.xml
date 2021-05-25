@@ -7,6 +7,8 @@
       <form string="Imprimir guía de despacho">
         <group>
           <field name="option" widget="radio"/>
+          <field name="partner_id" options="{'no_create': True}" attrs="{'invisible': [('option', '!=', 'by_customer')], 'required': [('option', '=', 'by_customer')]}" domain="[('id', 'in', domain_partner_ids)]"/>
+          <field name="domain_partner_ids" widget="many2many_tags" invisible="1"/>
         </group>
         <footer>
           <button name="print_report" string="Imprimir PDF" type="object" class="btn-primary"/>
