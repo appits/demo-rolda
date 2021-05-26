@@ -34,7 +34,6 @@
     string="Consolidado"
     report_type="qweb-pdf"
     paperformat="paperformat_despacho_rolda"
-    print_report_name="(object._get_display_name())"
     name="despacho_rolda.report_despacho_consolidated_document"
     file="despacho_rolda.report_despacho_consolidated_document"
   />
@@ -42,20 +41,29 @@
     id="report_guide_customer"
     model="wz.despacho.print.guide"
     string="Por cliente"
-    print_report_name="(object._get_display_name())"
     report_type="qweb-pdf"
     paperformat="paperformat_despacho_rolda"
     name="despacho_rolda.report_despacho_customer_document"
     file="despacho_rolda.report_despacho_customer_document"
+    print_report_name="'Despacho: %s' % (object.partner_id.name)"
   />
   <report
     id="report_guide_transport"
     model="wz.despacho.print.guide"
     string="Por transporte"
-    print_report_name="(object._get_display_name())"
     report_type="qweb-pdf"
     paperformat="paperformat_despacho_transport_rolda"
     name="despacho_rolda.report_despacho_transport_document"
     file="despacho_rolda.report_despacho_transport_document"
+    print_report_name="'Despacho: Compañía de Transporte'"
+  />
+  <report
+    id="report_guide_farmatodo"
+    model="wz.despacho.print.guide"
+    string="Farmatodo"
+    report_type="qweb-pdf"
+    paperformat="paperformat_despacho_rolda"
+    name="despacho_rolda.report_despacho_farmatodo_document"
+    file="despacho_rolda.report_despacho_farmatodo_document"
   />
 </odoo>

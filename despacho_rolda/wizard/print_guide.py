@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.exceptions import UserError
 
 
@@ -21,6 +21,15 @@ class WzDespachoPrintGuide(models.TransientModel):
     ], string='Opción', default='consolidated', required=True)
     partner_id = fields.Many2one('res.partner', 'Cliente')
     domain_partner_ids = fields.Many2many('res.partner', 'partner_wz_despacho_rel', 'wz_despacho_id', 'partner_id', string='Domain de Clientes', default=_default_domain_partner)
+
+    @api.onchange('option')
+    def _onchange_option(self):
+        if self.option == 'farmatodo':
+            farmatodo_partner = self.env['res.partner'].search([
+                ('name', 'ilike', 'farmatodo')], limit=1)
+            self.partner_id = farmatodo_partner.id
+        else:
+            self.partner_id = False
 
     def _get_report_data(self):
         return {
@@ -111,6 +120,36 @@ class WzDespachoPrintGuide(models.TransientModel):
         datas['despacho'] = vals
         return self.env.ref('despacho_rolda.report_guide_transport').report_action([], data=datas)
 
+    def _report_farmatodo(self, despacho):
+        vals = {
+            'name': despacho.name,
+            'transport_name': despacho.transport_company_id.name,
+            'license': despacho.license_plate,
+            'driver_name': despacho.driver_id.name,
+            'driver_vat': despacho.vat,
+            'assistant_name': despacho.assistant_id.name,
+            'assistant_vat': despacho.vat_assistant,
+            'notes': despacho.notes,
+            'seal': despacho.seal,
+            'lines': [],
+        }
+        if self.partner_id:
+            invoices = despacho.line_ids.filtered(lambda x: x.partner_id == self.partner_id)
+        else:
+            raise UserError('Debes seleccionar un Cliente con nombre Farmatodo.')
+        vals['inv_amount_total'] = sum(invoices.mapped('amount_total'))
+        for line in invoices:
+            vals['lines'].append({
+                'name': line.name,
+                'partner_name': line.partner_id.name,
+                'partner_city': line.partner_id.city,
+                'quantity': line.total_qty,
+                'weight': line.total_weight,
+            })
+        datas = self._get_report_data()
+        datas['despacho'] = vals
+        return self.env.ref('despacho_rolda.report_guide_farmatodo').report_action([], data=datas)
+
     def print_report(self):
         res_model = self._context.get('active_model')
         res_id = self._context.get('active_id')
@@ -120,22 +159,3 @@ class WzDespachoPrintGuide(models.TransientModel):
         except AttributeError as exc:
             raise UserError(f'No existe definición de método para: _report_{self.option}()')
         return ref_function(despacho)
-
-    def _get_display_name(self):
-        ''' Helper to get the display name of an report depending of its option.
-        :return:            A string representing the report.
-        '''
-        # Verificar funcionalidad.
-        self.ensure_one()
-        res_model = self._context.get('active_model')
-        res_id = self._context.get('active_id')
-        despacho = self.env[res_model].browse(res_id)
-        report_name = 'Despacho: '
-        report_name += {
-            'consolidated': 'Consolidado',
-            'by_customer': self.partner_id.name,
-            'by_transport': despacho.transport_company_id.name,
-            'farmatodo': 'Farmatodo',
-        }[self.option]
-        print(f'\n\n{report_name}')
-        return report_name

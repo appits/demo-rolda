@@ -17,6 +17,7 @@
         'report/report_guide_consolidated_templates.xml',
         'report/report_guide_customer_templates.xml',
         'report/report_guide_transport_templates.xml',
+        'report/report_guide_farmatodo_templates.xml',
         'report/report_templates.xml',
         'report/despacho_rolda_reports.xml',
     ],
