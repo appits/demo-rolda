@@ -56,6 +56,32 @@
             <span>Peso Total: <t t-esc="'{:,.2f}'.format(total_weight)"/></span>
           </div>
         </div>
+        <t t-set="top_footer">
+          <span>Observaciones Generales: <span t-esc="despacho['notes']"/> </span><span>Precinto: <span t-esc="seal"/></span>
+          <table class="table table-rolda-footer" style="page-break-inside: avoid; font-size: 80%;">
+            <tr>
+              <td class="w-20">Aprobación logística</td>
+              <td class="w-20">Preparador</td>
+              <td class="w-20">Chequeador</td>
+              <td class="w-20">Conforme transportista</td>
+              <td class="w-20">Retorno de facturas despachadas</td>
+            </tr>
+            <tr>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+            </tr>
+            <tr>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+              <td class="">FECHA:</td>
+            </tr>
+          </table>
+        </t>
       </t>
     </t>
   </template>

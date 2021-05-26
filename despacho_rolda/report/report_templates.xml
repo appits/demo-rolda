@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12" name="company_address">
+        <div class="col-12" name="company_address" t-if="not no_info_address">
           <div><span t-field="company.partner_id.name"/>, T.L.F.: <span t-field="company.phone"/></div>
           <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
         </div>
@@ -44,30 +44,7 @@
     <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout" t-if="not no_footer">
       <div>
         <div name="sign_infos">
-          <span>Observaciones Generales: <span t-esc="despacho['notes']"/> </span><span>Precinto: <span t-esc="seal"/></span>
-          <table class="table table-rolda-footer" style="page-break-inside: avoid; font-size: 80%;">
-            <tr>
-              <td class="w-20">Aprobación logística</td>
-              <td class="w-20">Preparador</td>
-              <td class="w-20">Chequeador</td>
-              <td class="w-20">Conforme transportista</td>
-              <td class="w-20">Retorno de facturas despachadas</td>
-            </tr>
-            <tr>
-              <td class="py-4"/>
-              <td class="py-4"/>
-              <td class="py-4"/>
-              <td class="py-4"/>
-              <td class="py-4"/>
-            </tr>
-            <tr>
-              <td class="">FECHA:</td>
-              <td class="">FECHA:</td>
-              <td class="">FECHA:</td>
-              <td class="">FECHA:</td>
-              <td class="">FECHA:</td>
-            </tr>
-          </table>
+          <div t-if="top_footer" t-raw="top_footer"/>
         </div>
       </div>
     </div>

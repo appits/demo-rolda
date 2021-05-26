@@ -22,6 +22,12 @@ class WzDespachoPrintGuide(models.TransientModel):
     partner_id = fields.Many2one('res.partner', 'Cliente')
     domain_partner_ids = fields.Many2many('res.partner', 'partner_wz_despacho_rel', 'wz_despacho_id', 'partner_id', string='Domain de Clientes', default=_default_domain_partner)
 
+    def _get_report_data(self):
+        return {
+            'model': self._name,
+            'form': self.read()[0],
+        }
+
     def _report_consolidated(self, despacho):
         vals = {
             'name': despacho.name,
@@ -43,11 +49,8 @@ class WzDespachoPrintGuide(models.TransientModel):
                 'quantity': line.total_qty,
                 'weight': line.total_weight,
             })
-        datas = {
-            'despacho': vals,
-            'model': self._name,
-            'form': self.read()[0],
-        }
+        datas = self._get_report_data()
+        datas['despacho'] = vals
         return self.env.ref('despacho_rolda.report_guide_consolidated').report_action([], data=datas)
 
     def _report_by_customer(self, despacho):
@@ -75,12 +78,38 @@ class WzDespachoPrintGuide(models.TransientModel):
                 'discount': line.discount,
                 'price_subtotal': line.price_subtotal,
             })
-        datas = {
-            'despacho': vals,
-            'model': self._name,
-            'form': self.read()[0],
-        }
+        datas = self._get_report_data()
+        datas['despacho'] = vals
         return self.env.ref('despacho_rolda.report_guide_customer').report_action([], data=datas)
+
+    def _report_by_transport(self, despacho):
+        vals = {
+            'name': despacho.name,
+            'transport_name': despacho.transport_company_id.name,
+            'license': despacho.license_plate,
+            'driver_name': despacho.driver_id.name,
+            'driver_vat': despacho.vat,
+            'assistant_name': despacho.assistant_id.name,
+            'assistant_vat': despacho.vat_assistant,
+            'notes': despacho.notes,
+            'seal': despacho.seal,
+            'lines': [],
+        }
+        invoices = despacho.line_ids
+        vals['inv_amount_total'] = sum(invoices.mapped('amount_total'))
+        vals['total_weight'] = sum(invoices.mapped('total_weight'))
+        for line in invoices.invoice_line_ids:
+            vals['lines'].append({
+                'barcode': line.product_id.barcode,
+                'name': line.name,
+                'package': line.product_id.weight * line.quantity,
+                'quantity': line.quantity,
+                # 'presentation': line.presentation,
+                # 'price_subtotal': line.price_subtotal,
+            })
+        datas = self._get_report_data()
+        datas['despacho'] = vals
+        return self.env.ref('despacho_rolda.report_guide_transport').report_action([], data=datas)
 
     def print_report(self):
         res_model = self._context.get('active_model')
@@ -88,9 +117,9 @@ class WzDespachoPrintGuide(models.TransientModel):
         despacho = self.env[res_model].browse(res_id)
         try:
             ref_function = getattr(self, f'_report_{self.option}')
-            return ref_function(despacho)
         except AttributeError as exc:
-            raise UserError(f'No existe definición de método para _report_{self.option}')
+            raise UserError(f'No existe definición de método para: _report_{self.option}()')
+        return ref_function(despacho)
 
     def _get_display_name(self):
         ''' Helper to get the display name of an report depending of its option.
@@ -103,6 +132,7 @@ class WzDespachoPrintGuide(models.TransientModel):
         despacho = self.env[res_model].browse(res_id)
         report_name = 'Despacho: '
         report_name += {
+            'consolidated': 'Consolidado',
             'by_customer': self.partner_id.name,
             'by_transport': despacho.transport_company_id.name,
             'farmatodo': 'Farmatodo',
