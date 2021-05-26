@@ -104,7 +104,7 @@ class WzDespachoPrintGuide(models.TransientModel):
                 'name': line.name,
                 'package': line.product_id.weight * line.quantity,
                 'quantity': line.quantity,
-                # 'presentation': line.presentation,
+                'uom_name': line.product_uom_id.name,
                 # 'price_subtotal': line.price_subtotal,
             })
         datas = self._get_report_data()
