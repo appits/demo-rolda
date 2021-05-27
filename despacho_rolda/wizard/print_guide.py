@@ -7,6 +7,9 @@ class WzDespachoPrintGuide(models.TransientModel):
     _name = 'wz.despacho.print.guide'
     _description = 'Impresión de guías de despacho'
 
+    def _default_despacho(self):
+        return self._context.get('active_id')
+
     def _default_domain_partner(self):
         res_model = self._context.get('active_model')
         res_id = self._context.get('active_id')
@@ -20,6 +23,7 @@ class WzDespachoPrintGuide(models.TransientModel):
         ('farmatodo', 'Farmatodo'),
     ], string='Opción', default='consolidated', required=True)
     partner_id = fields.Many2one('res.partner', 'Cliente')
+    despacho_id = fields.Many2one('despacho.despacho', 'Despacho', default=_default_despacho)
     domain_partner_ids = fields.Many2many('res.partner', 'partner_wz_despacho_rel', 'wz_despacho_id', 'partner_id', string='Domain de Clientes', default=_default_domain_partner)
 
     @api.onchange('option')

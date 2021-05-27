@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="view_wz_export_bank_payments_form" model="ir.ui.view">
+        <field name="name">wz.export.bank.payments.form</field>
+        <field name="model">wz.export.bank.payments</field>
+        <field name="arch" type="xml">
+            <form string="Exportar pagos de banco">
+                <group>
+                    <field name="bank_id" domain="[('type', '=', 'bank')]" options="{'no_create': True}"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="txt_file" filename="txt_name" readonly="1"/>
+                    <field name="txt_name" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_export_txt" string="Generar TXT" type="object" class="btn-primary"/>
+                    <button string="Cancelar" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_wz_export_bank_payments">
+        <field name="name">Generar TXT de Banco</field>
+        <field name="res_model">wz.export.bank.payments</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Generar TXT de Bancos" id="menu_action_wz_export_bank_payments" parent="locv_account_fiscal_requirements.menu_venezuela_reporting" action="action_wz_export_bank_payments" sequence="20"/>
+
+</odoo>
