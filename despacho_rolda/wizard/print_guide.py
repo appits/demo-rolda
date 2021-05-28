@@ -73,7 +73,7 @@ class WzDespachoPrintGuide(models.TransientModel):
             'partner_name': self.partner_id.name,
             'partner_vat': self.partner_id.vat,
             # 'payment_term_name': despacho.seal,
-            # 'date': despacho.date,
+            'date': f'{despacho.date:%d/%m/%Y %H:%M}',
             'lines': [],
         }
         if self.partner_id:

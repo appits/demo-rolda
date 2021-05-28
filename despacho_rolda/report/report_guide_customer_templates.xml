@@ -24,17 +24,17 @@
           <div class="table-bordered">
             <table class="table table-borderless">
               <tr>
-                <td><strong>Cliente:</strong> <span t-esc="despacho['partner_name']"/></td>
-                <td><strong>R.I.F.:</strong> <span t-esc="despacho['partner_vat']"/></td>
-                <td><strong>Cuidad Destino:</strong> <span t-esc="despacho['partner_city']"/></td>
+                <td class="py-0"><strong>Cliente:</strong> <span t-esc="despacho['partner_name']"/></td>
+                <td class="py-0"><strong>R.I.F.:</strong> <span t-esc="despacho['partner_vat']"/></td>
+                <td class="py-0"><strong>Cuidad Destino:</strong> <span t-esc="despacho['partner_city']"/></td>
               </tr>
               <tr>
-                <td colspan="3">Dirección de Entrega: </td>
+                <td class="py-0" colspan="3">Dirección de Entrega: </td>
               </tr>
               <tr>
-                <td><strong>Condición de Pago:</strong> <span/></td>
-                <td><strong>Fecha Emisión:</strong> <span/></td>
-                <td><strong>Fecha Vencimiento:</strong> <span/></td>
+                <td class="py-0"><strong>Condición de Pago:</strong> <span/></td>
+                <td class="py-0"><strong>Fecha Emisión:</strong> <span t-esc="despacho['date']"/></td>
+                <td class="py-0"><strong>Fecha Vencimiento:</strong> <span/></td>
               </tr>
             </table>
           </div>
