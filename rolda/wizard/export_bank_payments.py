@@ -16,21 +16,26 @@ class WzExportBankPayments(models.TransientModel):
     txt_name = fields.Char('Filename txt')
 
     def generate_banesco(self):
-        payments = self.env['account.payment'].search([
+        out_payments = self.env['account.payment'].search([
             ('journal_id', '=', self.bank_id.id),
             ('payment_date', '>=', self.date_start),
             ('payment_date', '<=', self.date_end),
             ('payment_type', '=', 'outbound'),
         ])
         txt_data = ''
-        for pay in payments:
-            txt_data += '{:<3}|{:<15}|{:<1}|{:<6}|{:<6}|{:<1}|\n\
-                {:<2}|{:<35}|{:<3}|{:<35}|{:%Y%m%d%H%M%S}|\n\
-                {:<2}|{:<30}|{:<17}|{:<35}|{:0>15}|{:<3}|{:<1}|{:<34}|{:<11}|{:%Y%m%d}\n'.format(
-                'HDR', 'BANESCO', 'E', 'D  95B', 'PAYMUL', 'P',
-                '01', 'SCV', '9', pay.name, pay.create_date,
-                '02', pay.communication, pay.company_id.vat, pay.company_id.name, pay.amount, pay.currency_id.name, '', pay.journal_id.bank_account_id.acc_number, 'BANESCO', pay.payment_date
-            )
+        if out_payments:
+            # 1ra línea: Para registro de control    (inicia con: HDR)
+            txt_data += f"{'HDR':<3}{'BANESCO':<15}{'E':<1}{'D  95B':<6}{'PAYMUL':<6}{'P':<1}\n"
+            for pay in out_payments:
+                # 2da línea: Para registro de encabezado (inicia con: 01)
+                txt_data += '{:<2}{:<35}{:<3}{:<35}{:%Y%m%d%H%M%S}\n'.format(
+                    '01', 'SCV', '9', pay.name, pay.create_date)
+                # 3ra línea: Para registro de débito (inicia con: 02)
+                txt_data += '{:<2}{:<30}{:<17}{:<35}{:0>15}{:<3}{:<1}{:<34}{:<11}{:%Y%m%d}\n'.format(
+                    '02', pay.communication, pay.company_id.vat, pay.company_id.name, f'{pay.amount:.2f}'.replace('.', ''), pay.currency_id.name, '', pay.journal_id.bank_account_id.acc_number, 'BANESCO', pay.payment_date
+                )
+            # Última línea: Para registro de totales (inicia con: 06)
+            txt_data += f'{"06":<2}{len(out_payments):0>15}{"":0>15}{"":0>15}\n'
         return txt_data
 
     def _write_attachment(self, root):
@@ -38,8 +43,8 @@ class WzExportBankPayments(models.TransientModel):
         attachment
         @param root: location to save document
         """
-        fecha = time.strftime('%Y_%m_%d_%H%M%S')
-        txt_name = f'BANESCO_{fecha}.txt'
+        fecha = time.strftime('%d%m%y')
+        txt_name = f'BANESCOPATENTE{fecha}.txt'
         txt_file = root.encode('utf-8')
         txt_file = base64.encodestring(txt_file)
         self.write({'txt_name': txt_name, 'txt_file': txt_file})
