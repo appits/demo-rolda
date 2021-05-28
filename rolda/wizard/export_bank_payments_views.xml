@@ -7,14 +7,14 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="create_date"/>
-          <field name="type_rec" optional="show"/>
-          <field name="type_trans" optional="show"/>
-          <field name="condition" optional="show"/>
+          <field name="create_date" string="Fecha de creación"/>
+          <field name="type_rec" optional="hide"/>
+          <field name="type_trans" optional="hide"/>
+          <field name="condition" optional="hide"/>
           <field name="bank_id"/>
           <field name="date_start"/>
           <field name="date_end"/>
-          <field name="txt_file"/>
+          <field name="txt_file" filename="txt_name" widget="binary"/>
           <field name="txt_name" invisible="1"/>
           <field name="state"/>
         </tree>
