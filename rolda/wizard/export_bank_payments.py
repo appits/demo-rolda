@@ -46,25 +46,15 @@ class ExportBankPayments(models.Model):
         """ Exportar el documento en texto plano. """
         self.ensure_one()
         data = ''
-        if 'Banesco' in self.bank_id.name:
+        if 'banesco' in self.bank_id.name.lower():
             root = self.generate_banesco()
             data, filename = self._write_attachment(root, 'BANESCOPATENTE')
-        if 'Exterior' in self.bank_id.name:
+        if 'exterior' in self.bank_id.name.lower():
             root = self.generate_exterior()
             data, filename = self._write_attachment(root, 'EXTERIOR')
         if not data:
             raise ValidationError('No se pudo generar el archivo. Intente de nuevo con otra fecha u otro banco.')
-        # IrAttachment = self.env['ir.attachment'].sudo()
-        # # Guardado del archivo
-        # att = IrAttachment.create({
-        #     'name': filename,
-        #     'type': 'binary',
-        #     'datas': data,
-        #     'res_model': self._name,
-        #     'res_id': self.id,
-        # })
-        self.write({'state': 'done'})
-        return True
+        return self.write({'state': 'done'})
 
     def _write_attachment(self, root, prefix):
         """ Encrypt txt, save it to the db and view it on the client as an
@@ -107,17 +97,19 @@ class ExportBankPayments(models.Model):
     def generate_exterior(self):
         out_payments = self._get_out_payments()
         txt_data = ''
+        company_id = self.bank_id.company_id
         qty_payments = len(out_payments)
         total_amount = sum(out_payments.mapped('amount'))
-        # if out_payments:
-        #     for partner in out_payments.mapped('partner_id'):
-        #         # 1ra línea: Estructura del encabezado
-        #         ident = partner.nationality if partner.company_type == 'person' else partner.vat.split('-')[0]
-        #         num_ident = partner.identification_id if partner.company_type == 'person' else partner.vat and partner.vat.split('-', 1)[1]
-        #         acc_number = self.bank_id.bank_account_id.acc_number
-        #         txt_data += f"{ident:<1}{num_ident:0>9}{acc_number:<20}{qty_payments:0>4}{total_amount:0>13}{self.date_start:%d%m%Y}{'01':0>2}{'':<19}\n"
-        #         for pay in out_payments.filtered(lambda x: x.partner_id == partner):
-        #             # 2da línea: Estructura del detalle
-        #             txt_data += '{:<50}{:0>12}{:<120}{:<3}{:<20}{:<50}{:0>8}{:0>11}\n'.format(
-        #                 pay.partner_id.name, pay.amount, pay.name, '', '', pay.partner_id.email, pay.communication, f'{pay.partner_id.nationality}{pay.partner_id.identification_id}')
+        if out_payments:
+            ident = company_id.vat.split('-')[0]
+            num_ident = company_id.vat and company_id.vat.split('-', 1)[1]
+            acc_number = self.bank_id.bank_account_id.acc_number
+            # 1ra línea: Estructura del encabezado
+            txt_data += f"{ident:<1}{num_ident:0>9}{acc_number:<20}{qty_payments:0>4}{total_amount:0>13}{self.create_date:%d%m%Y}{'01':0>2}{'':<19}\n"
+            for pay in out_payments:
+                p_ident = pay.partner_id.nationality if pay.partner_id.company_type == 'person' else pay.partner_id.vat.split('-')[0]
+                p_num_ident = pay.partner_id.identification_id if pay.partner_id.company_type == 'person' else pay.partner_id.vat and pay.partner_id.vat.split('-', 1)[1]
+                # 2da línea: Estructura del detalle
+                txt_data += '{:<50}{:0>12}{:<120}{:<3}{:<20}{:<50}{:0>8}{:0>11}\n'.format(
+                    pay.partner_id.name, pay.amount, pay.communication.replace('.', ' ').replace('/', ' '), '', '', pay.partner_id.email, pay.name, f'{p_ident}{p_num_ident}')
         return txt_data
