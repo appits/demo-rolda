@@ -109,7 +109,11 @@ class ExportBankPayments(models.Model):
             for pay in out_payments:
                 p_ident = pay.partner_id.nationality if pay.partner_id.company_type == 'person' else pay.partner_id.vat.split('-')[0]
                 p_num_ident = pay.partner_id.identification_id if pay.partner_id.company_type == 'person' else pay.partner_id.vat and pay.partner_id.vat.split('-', 1)[1]
+                if pay.partner_id.bank_ids:
+                    p_bank = pay.partner_id.bank_ids[0].acc_number
+                else:
+                    p_bank = ''
                 # 2da línea: Estructura del detalle
                 txt_data += '{:<50}{:0>12}{:<120}{:<3}{:<20}{:<50}{:0>8}{:0>11}\n'.format(
-                    pay.partner_id.name, pay.amount, pay.communication.replace('.', ' ').replace('/', ' '), '', '', pay.partner_id.email, pay.name, f'{p_ident}{p_num_ident}')
+                    pay.partner_id.name, pay.amount, pay.communication.replace('.', ' ').replace('/', ' '), p_bank[1:4], p_bank, pay.partner_id.email or '', pay.name, f'{p_ident}{p_num_ident}')
         return txt_data
