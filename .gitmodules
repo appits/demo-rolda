@@ -1,7 +1,3 @@
-[submodule "OCA/product-attribute"]
-	path = OCA/product-attribute
-	url = git@github.com:OCA/product-attribute.git
-
 [submodule "OCA/product-pack"]
 	path = OCA/product-pack
 	url = git@github.com:OCA/product-pack.git
@@ -10,4 +6,8 @@
 [submodule "OCA/product-attribute"]
 	path = OCA/product-attribute
 	url = git@github.com:OCA/product-attribute.git
+
+[submodule "festovalros/l10n_ve_dpt"]
+	path = festovalros/l10n_ve_dpt
+	url = git@github.com:festovalros/l10n_ve_dpt.git
 	branch = 13.0
