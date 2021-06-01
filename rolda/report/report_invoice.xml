@@ -4,7 +4,7 @@
     <xpath expr="." position="replace">
       <t t-call="web.basic_layout">
         <t t-set="o" t-value="o.with_context(lang=lang)"/>
-        <div class="page">
+        <div class="page page-rolda">
           <div name="partner_info" class="row mt32 mb8">
             <div class="col-6" t-if="o.partner_id">
               <p>
@@ -168,7 +168,7 @@
             </div>
           </div>
         </div>
-        <div class="footer">
+        <div class="footer footer-rolda">
           <div class="clearfix text-center">
             <p class="bg-light">Son <span class="text-uppercase" t-esc="o.currency_id.amount_to_text(o.amount_total)"/></p>
           </div>

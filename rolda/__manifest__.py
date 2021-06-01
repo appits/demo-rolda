@@ -7,7 +7,9 @@
     'website': 'https://gitlab.com/keiverobles',
     'category': 'Libros Fiscales-Accounting',
     'data': [
+        'security/ir.model.access.csv',
         'data/company_data.xml',
+        'data/sequence_data.xml',
         'views/assets.xml',
         'views/res_partner_views.xml',
         #'wizard/export_bank_payments_views.xml',
