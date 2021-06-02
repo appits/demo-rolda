@@ -526,7 +526,7 @@ class AccountTax(models.Model):
         digits=dp.get_precision(' Withhold'),
         help="Importe de retención de IVA")
     base_ret = fields.Float(
-        string='Amount',
+        string='Monto base Retención',
         digits=dp.get_precision('Withhold'),
         help="Cantidad sin impuestos")
 
