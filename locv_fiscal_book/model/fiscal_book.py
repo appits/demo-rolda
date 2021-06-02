@@ -331,7 +331,7 @@ class FiscalBook(models.Model):
     get_total_with_iva_imex_sum = fields.Float(compute='_get_total_with_iva_sum',
                                                method=True, store=True,
                                             #   multi="get_total_with_iva",
-                                               string="Importe total con IVA",
+                                               string="Importe total con IVA I/E",
                                                help="Total importado / exportado con totalización del IVA")
     imex_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
                                      string="Monto imponible internacional",
@@ -339,27 +339,27 @@ class FiscalBook(models.Model):
                                           "y adicional). Utilizado en la segunda fila en el resumen del libro de ventas"
                                           "con el título de ventas de exportación")
     imex_exempt_vat_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                       string="Impuesto exento",
+                                       string="Impuesto exento Internacional",
                                        help="Totalización de impuestos exentos de importación / exportación: suma de exentos "
                                             "columna para transacciones internacionales")
     imex_sdcf_vat_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                     string="Impuesto SDCF",
+                                     string="Impuesto SDCF Internacional",
                                      help="Importación / Exportación Totalización de impuestos SDCF: Suma de la columna SDCF "
                                           "para transacciones internacionales")
     imex_general_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                             string="Importe imponible general del IVA",
+                                             string="Importe imponible general del IVA Internacional",
                                              help="General IVA Impuestos Importaciones / Exportaciones Monto base. La suma de"
                                                   "Columna base general del IVA para transacciones internacionales")
     imex_general_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                            string="Cantidad gravada del IVA general",
+                                            string="Cantidad gravada del IVA general Internacional",
                                             help="Impuesto general a las importaciones / impuestos a la importación Monto del impuesto. La suma de"
                                                  "Columna de IVA general para transacciones internacionales")
     imex_additional_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                                string="Importe sujeto a IVA adicional",
+                                                string="Importe sujeto a IVA adicional Internacional",
                                                 help="Importes adicionales gravados con IVA / exportaciones Base Monto. La suma de"
                                                      "Columna Base de IVA adicional para transacciones internacionales")
     imex_additional_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                               string="Cantidad de IVA adicional gravada",
+                                               string="Cantidad de IVA adicional gravada Internacional",
                                                help="Impuesto adicional sobre las importaciones / Importes de impuestos. La suma de "
                                                     "Columna de IVA adicional para transacciones internacionales")
     imex_reduced_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
@@ -367,7 +367,7 @@ class FiscalBook(models.Model):
                                              help="IVA Reducido Importaciones / exportaciones Base Monto base. La suma de "
                                                   "Columna base de IVA reducido para transacciones internacionales")
     imex_reduced_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                            string="Importe reducido de IVA",
+                                            string="Importe reducido de IVA Internacional",
                                             help="Reducción del IVA Impuesto de Importaciones / Exportaciones Monto del impuesto. La suma de "
                                                  "Columna de IVA reducido para transacciones internacionales")
 
@@ -375,7 +375,7 @@ class FiscalBook(models.Model):
     get_total_with_iva_do_sum = fields.Float(compute='_get_total_with_iva_sum',
                                              method=True, store=True,
                                              multi="get_total_with_iva",
-                                             string='Importe total con IVA',
+                                             string='Importe total con IVA Nacional',
                                              help="Total nacional con totalización de IVA")
     do_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
                                    string="Cantidad imponible nacional",
@@ -383,41 +383,41 @@ class FiscalBook(models.Model):
                                         "general y adicional)")
     do_exempt_vat_sum = fields.Float(
         #digits=dp.get_precision('Account'),
-        string="Impuesto exento",
+        string="Impuesto exento Doméstico",
         help="Totalización de impuestos nacionales exentos. Para la Reserva de compra"
              "sumas Columna exenta para transacciones nacionales. En la reserva de venta"
              "Sumas de las columnas de exención del contribuyente y del no contribuyente")
     do_sdcf_vat_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                   string="Impuesto SDCF",
+                                   string="Impuesto SDCF Doméstico",
                                    help="Totalización de impuestos nacionales SDCF. Para el libro de compra se resume "
                                         "Columna SDCF para transacciones nacionales. Para la venta Reserve sumas"
                                         "Columnas SDCF de contribuyentes y no contribuyentes")
     do_general_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                           string="Importe imponible general del IVA",
+                                           string="Importe imponible general del IVA Doméstico",
                                            help="Totalización general de la base imponible del IVA general "
                                                 "Para el Libro de compras, suma la columna Base general del IVA para uso doméstico"
                                                 "transacciones. Para el libro de venta se suma al contribuyente y al contribuyente no tributario"
                                                 "Columnas generales de base de IVA")
     do_general_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                          string="Cantidad gravada del IVA general",
+                                          string="Cantidad gravada del IVA general Doméstico",
                                           help="Totalización de impuestos nacionales gravados con IVA general "
                                                "Para el libro de compras, suma la columna del impuesto general del IVA para los nacionales"
                                                "transacciones. Para el libro de venta se suma al contribuyente y al contribuyente no tributario"
                                                "Columnas generales del impuesto sobre el IVA")
     do_additional_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                              string="Importe sujeto a IVA adicional",
+                                              string="Importe sujeto a IVA adicional Doméstico",
                                               help="Totalización del monto base nacional gravado con IVA adicional "
                                                    "Para el Libro de compras, suma la columna Base de IVA adicional para"
                                                    "transacciones nacionales. Para la venta Libro que suma el contribuyente y no"
                                                    "Columnas de la base de IVA adicional del contribuyente")
     do_additional_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                             string="Cantidad de IVA adicional gravada",
+                                             string="Cantidad de IVA adicional gravada Doméstica",
                                              help="Totalización del monto del impuesto interno gravado con IVA adicional "
                                                   "Para el Libro de compras, suma la columna de IVA adicional para"
                                                   "transacciones nacionales. Para el libro de ventas suma las"
                                                   "Columnas de impuestos adicionales del contribuyente   y no Contribuyente")
     do_reduced_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                           string="Importe sujeto a impuestos reducido",
+                                           string="Importe domestico sujeto a impuestos reducido",
                                            help="Reduced VAT Taxed Domestic Base Amount Totalization."
                                                 " For Purchase Book it sums Reduced VAT Base column for domestic"
                                                 " transactions. For Sale Book it sums Tax Payer and Non-Tax Payer"
@@ -481,44 +481,44 @@ class FiscalBook(models.Model):
     get_total_with_iva_ntp_sum = fields.Float(compute='_get_total_with_iva_sum',
                                               method=True, store=True,
                                         #      multi="get_total_with_iva",
-                                              string="Total amount with VAT",
+                                              string="Non-Tax Total amount with VAT",
                                               help="Non-Tax Payer Total with VAT Totalization")
     ntp_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
                                     string="Non-Tax Payer Taxable Amount",
                                     help="Non-Tax Payer Grand Base Totalization. Sum of all no tax"
                                          " payer tax bases (reduced, general and additional)")
     ntp_exempt_vat_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                      string="Exempt Tax",
+                                      string="Non-Tax Exempt Tax",
                                       help="Non-Tax Payer Exempt Tax Totalization. Sum of Exempt"
                                            " column for Non-Tax Payer transactions")
     ntp_sdcf_vat_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                    string="SDCF Tax",
+                                    string="Non-Tax SDCF Tax",
                                     help="Non-Tax Payer SDCF Tax Totalization. Sum of SDCF column"
                                          " for Non-Tax Payer transactions")
     ntp_general_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                            string="General VAT Taxable Amount",
+                                            string="Non-Tax General VAT Taxable Amount",
                                             help="General VAT Taxed Non-Tax Payer Base Amount Totalization."
                                                  " Sum of General VAT Base column for taxy payer transactions")
     ntp_general_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                           string="General VAT Taxed Amount",
+                                           string="Non-Tax General VAT Taxed Amount",
                                            help="General VAT Taxed Non-Tax Payer Tax Amount Totalization."
                                                 " Sum of General VAT Tax column for Non-Tax Payer transactions")
     ntp_additional_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                               string="Additional VAT Taxable Amount",
+                                               string="Non-Tax Additional VAT Taxable Amount",
                                                help="Additional VAT Taxed Non-Tax Payer Base Amount Totalization."
                                                     " Sum of Additional VAT Base column for Non-Tax Payer"
                                                     " transactions")
     ntp_additional_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                              string="Additional VAT Taxed Amount",
+                                              string="Non-Tax Additional VAT Taxed Amount",
                                               help="Additional VAT Taxed Non-Tax Payer Tax Amount Totalization."
                                                    " Sum of Additional VAT Tax column for Non-Tax Payer"
                                                    " transactions")
     ntp_reduced_vat_base_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                            string="Reduced VAT Taxable Amount",
+                                            string="Non-Tax Reduced VAT Taxable Amount",
                                             help="Reduced VAT Taxed Non-Tax Payer Base Amount Totalization."
                                                  " Sum of Reduced VAT Base column for Non-Tax Payer transactions")
     ntp_reduced_vat_tax_sum = fields.Float(#digits=dp.get_precision('Account'),
-                                           string="Reduced VAT Taxed Amount",
+                                           string="Non-Tax Reduced VAT Taxed Amount",
                                            help="Reduced VAT Taxed Non-Tax Payer Tax Amount Totalization."
                                                 " Sum of Reduced VAT Tax column for Non-Tax Payer transactions")
     _rec_rame = 'fiscal_book_rec'
@@ -2316,7 +2316,7 @@ class FiscalBookLines(models.Model):
     debit_affected = fields.Char(string='Notas de débito afectadas', size=256, help='Notas de débito afectadas')
     credit_affected = fields.Char(string='Notas de crédito afectadas', size=256, help='Notas de crédito afectadas')
     type = fields.Selection(TYPE, string='Tipo de Transaccion', required=True, help="")
-    void_form = fields.Char(string='Tipo de Transaccion', size=192, help="Tipo de Operacion")
+    void_form = fields.Char(string='Tipo de Operación', size=192, help="Tipo de Operacion")
     fiscal_printer = fields.Char(string='Nro de Maquina Fiscal', size=192, help="")
     z_report = fields.Char(string='Reporte Z', size=64, help="")
     custom_statement = fields.Char(string="Declaracion Personalizada",
@@ -2427,17 +2427,17 @@ class AdjustmentBookLine(models.Model):
     uncredit_fiscal = fields.Float('Sin derecho a Credito Fiscal', #digits=dp.get_precision('Account'),
                                    # required=True,
                                    help="Sin derechoa credito fiscal")
-    amount_untaxed_n = fields.Float('Amount Untaxed', #digits=dp.get_precision('Account'), required=True,
+    amount_untaxed_n = fields.Float('National Amount Untaxed', #digits=dp.get_precision('Account'), required=True,
                                     help="Amount untaxed for national operations")
-    percent_with_vat_n = fields.Float('VAT Withholding (%)', #digits=dp.get_precision('Account'), required=True,
+    percent_with_vat_n = fields.Float('VAT National Withholding (%)', #digits=dp.get_precision('Account'), required=True,
                                       help="VAT percent (%) for national operations")
-    amount_with_vat_n = fields.Float('VAT Withholding Amount', # digits=dp.get_precision('Account'), required=True,
+    amount_with_vat_n = fields.Float('VAT National Withholding Amount', # digits=dp.get_precision('Account'), required=True,
                                      help="Percent(%) VAT for national operations")
-    amount_untaxed_i = fields.Float('Amount Untaxed', # digits=dp.get_precision('Account'), required=True,
+    amount_untaxed_i = fields.Float('International Amount Untaxed', # digits=dp.get_precision('Account'), required=True,
                                     help="Amount untaxed for international operations")
-    percent_with_vat_i = fields.Float('VAT Withholding (%)', #digits=dp.get_precision('Account'), required=True,
+    percent_with_vat_i = fields.Float('VAT international Withholding (%)', #digits=dp.get_precision('Account'), required=True,
                                       help="VAT percent (%) for international operations")
-    amount_with_vat_i = fields.Float('VAT Withholding Amount', # digits=dp.get_precision('Account'), required=True,
+    amount_with_vat_i = fields.Float('VAT International Withholding Amount', # digits=dp.get_precision('Account'), required=True,
                                      help="VAT amount for international operations")
     amount_with_vat = fields.Float('VAT Withholding Total Amount',
                                   # digits=dp.get_precision('Account'), required=True,

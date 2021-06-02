@@ -180,7 +180,7 @@ class IslrWhDoc(models.Model):
             states={'draft': [('readonly', False)]},
             help="Cuenta por cobrar o cuenta por pagar de socio")
     partner_id = fields.Many2one(
-            'res.partner', 'Compañia', readonly=True, required=True,
+            'res.partner', 'Compañia Objeto de Retención', readonly=True, required=True,
             states={'draft': [('readonly', False)]},
             help="Socio objeto de retención")
     currency_id = fields.Many2one(
@@ -1717,7 +1717,7 @@ class IslrWhDocLine(models.Model):
             'Tasa de retención',
             digits=dp.get_precision('Withhold ISLR'),
             help="Tasa de retención")
-    retention_rate = fields.Float(compute=_retention_rate, method=True, string='Tasa de retención',
+    retention_rate = fields.Float(compute=_retention_rate, method=True, string='Tasa de retención calculada',
              help="Withhold rate has been applied to the invoice",
              digits=dp.get_precision('Withhold ISLR'))
     xml_ids = fields.One2many(

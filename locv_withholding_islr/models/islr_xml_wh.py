@@ -69,12 +69,12 @@ class IslrXmlWhDoc(models.Model):
             readonly=True, states={'draft': [('readonly', False)]},
             help='ID de línea de factura de retención XML')
     invoice_xml_ids = fields.One2many(
-            'islr.xml.wh.line', 'islr_xml_wh_doc', 'Líneas de documentos XML',
+            'islr.xml.wh.line', 'islr_xml_wh_doc', 'Líneas de facturas XML',
             readonly=True, states={'draft': [('readonly', False)]},
             help='ID de línea de factura de retención XML',
             domain=[('type', '=', 'invoice')])
     employee_xml_ids = fields.One2many(
-            'islr.xml.wh.line', 'islr_xml_wh_doc', 'Líneas de documentos XML',
+            'islr.xml.wh.line', 'islr_xml_wh_doc', 'Líneas de Empleados XML',
             readonly=True, states={'draft': [('readonly', False)]},
             help='ID de línea de empleado de retención XML',
             domain=[('type', '=', 'employee')])
