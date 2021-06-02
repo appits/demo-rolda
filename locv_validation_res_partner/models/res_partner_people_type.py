@@ -13,7 +13,7 @@ class ResPartner(models.Model):
 
     people_type_company = fields.Selection([
         ('pjdo', 'PJDO    Persona Jurídica Domiciliada'),
-        ('pjnd', 'PJND    Persona Jurídica No Domiciliada')], 'Tipo de Persona')
+        ('pjnd', 'PJND    Persona Jurídica No Domiciliada')], 'Tipo de Persona Jurídica')
 
 
 

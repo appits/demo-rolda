@@ -33,11 +33,11 @@ class AccountAdvancePayment(models.Model):
     move_line = fields.One2many('account.move.line',
                                          related='move_id.line_ids',
                                          string='Asientos contables', readonly=True)
-    move_apply_id = fields.Many2one('account.move', 'Asiento contable')
+    move_apply_id = fields.Many2one('account.move', 'Asiento contable aplicado')
     move_apply_line = fields.One2many('account.move.line',
                                 related='move_id.line_ids',
                                 string='Líneas de asientos contables', readonly=True)
-    move_refund_id = fields.Many2one('account.move', 'Asiento contable')
+    move_refund_id = fields.Many2one('account.move', 'Asiento contable devolución')
     move_refund_line = fields.One2many('account.move.line',
                                       related='move_id.line_ids',
                                       string='Líneas de asientos contables devolución', readonly=True)

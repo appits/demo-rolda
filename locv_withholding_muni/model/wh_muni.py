@@ -55,7 +55,7 @@ class AccountWhMunici(models.Model):
                        help="Codigo de Retencion") #
     number = fields.Selection([('out_invoice', 'Factura de Cliente'),
                                ('in_invoice', 'Factura de Proveedor'), ],
-                              string='Tipo', readonly=True,  help="Factura" , default=_get_type) #default=lambda s: s._get_type(),
+                              string='Tipo factura', readonly=True,  help="Factura" , default=_get_type) #default=lambda s: s._get_type(),
     type = fields.Selection([('out_invoice', 'Customer Invoice'),
                              ('in_invoice', 'Supplier Invoice'), ],
                             string='Tipo', readonly=True, default=_get_type, help="Withholding type")

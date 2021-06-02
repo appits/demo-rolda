@@ -853,7 +853,7 @@ class AccountWhIva(models.Model):
         help="Internal withholding reference")
     '''
     number_customer= fields.Char(
-        string='Numero de Comprobante', size=32,
+        string='Numero de Comprobante Cliente', size=32,
         help="Numero de Retencion de IVA")
     number = fields.Char(
         string='Numero de Comprobante', size=32,
@@ -918,7 +918,7 @@ class AccountWhIva(models.Model):
         'res.partner', string='Socio de terceros',
         help='Socio tercero')
 
-    number_comprobante = fields.Char(string='Numero de Comprobante', size=25)
+    number_comprobante = fields.Char(string='Numero de Comprobante 2', size=25)
 
     @api.depends('wh_lines.amount_tax_ret', 'wh_lines.base_ret')
     def _amount_ret_all(self):
