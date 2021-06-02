@@ -36,7 +36,7 @@ class AccountMove(models.Model):
         states={'draft': [('readonly', False)]},
         help="Fecha administrativa, generalmente es la fecha impresa en "
              "factura, esta fecha se utiliza para mostrar en la compra fiscal"
-             " libro", select=True)
+             " libro")
     invoice_date = fields.Date(string='Invoice/Bill Date', readonly=True, index=True, copy=False,
                                states={'draft': [('readonly', False)]},
                                default=_get_default_invoice_date)

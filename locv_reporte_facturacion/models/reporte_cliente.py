@@ -5,6 +5,7 @@ from datetime import datetime, date, timedelta
 
 class ReportInvoiceCliente(models.AbstractModel):
     _name = 'report.locv_reporte_facturacion.template_cliente'
+    _description = 'invoice client report'
 
     @api.model
     def _get_report_values(self, docids, data):
