@@ -594,7 +594,7 @@ class AccountWhIva(models.Model):
                         abs(amount), account_id, journal_id,
                         writeoff_account_id,writeoff_journal_id,
                         date,name,wh_iva_tax_line, 'wh_iva')
-
+                    '''
                     if (line.invoice_id.currency_id.id != line.invoice_id.company_id.currency_id.id):
                         f_xc = line.invoice_id.x_studio_field_l5IHS
                         for ml in self.env['account.move.line'].search([('move_id','=',ret_move.id)]):
@@ -609,6 +609,7 @@ class AccountWhIva(models.Model):
                                 ml.write({
                                     'amount_currency': (ml.debit/f_xc)})
                     ret_move.post()
+                    '''
                     # make the withholding line point to that move
 
                     rl = {'move_id': ret_move.id}
