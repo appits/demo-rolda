@@ -41,7 +41,7 @@ class AccountMoveInherit(models.Model):
     people_type_company1 = fields.Selection([
         ('pjdo', 'PJDO    Persona Jurídica Domiciliada'),
         ('pjnd', 'PJND    Persona Jurídica No Domiciliada')
-    ], 'Tipo de Persona')
+    ], 'Tipo de Persona Jurídica')
 
     people_type_individual1 = fields.Selection([
     ('pnre', 'PNRE    Persona Natural Residente'),

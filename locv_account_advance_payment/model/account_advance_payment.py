@@ -23,7 +23,7 @@ class AccountAdvancePayment(models.Model):
     journal_id = fields.Many2one('account.journal', string='Journal', related='partner_id.journal_advanced_id')
     apply_journal_id = fields.Many2one('account.journal', string='Journal applied', related='partner_id.journal_advanced_id')
     bank_account_id = fields.Many2one('account.journal',string='Bank')
-    advance_account_id = fields.Many2one('account.journal',string='Bank')
+    advance_account_id = fields.Many2one('account.journal',string='advance Bank journal')
     payment_id = fields.Char(string='Payment Methods')
     date_advance = fields.Date(string='Advance Date')
     currency_id = fields.Many2one('res.currency', string='Currency')
@@ -36,14 +36,14 @@ class AccountAdvancePayment(models.Model):
     move_apply_id = fields.Many2one('account.move', 'Asiento contable')
     move_apply_line = fields.One2many('account.move.line',
                                 related='move_id.line_ids',
-                                string='Asientos contables', readonly=True)
+                                string='Líneas de asientos contables', readonly=True)
     move_refund_id = fields.Many2one('account.move', 'Asiento contable')
     move_refund_line = fields.One2many('account.move.line',
                                       related='move_id.line_ids',
-                                      string='Asientos contables', readonly=True)
+                                      string='Líneas de asientos contables devolución', readonly=True)
     state = fields.Selection(ADVANCE_PAYMET_STATES, string='Status',readonly=True, copy=False, default='draft')
-    asiento_conciliado = fields.One2many('account.move.line', related='move_id.line_ids', string='Asientos contables', readonly=True)
-    asiento_conl_apply = fields.One2many('account.move.line', related='move_apply_id.line_ids', string='Asientos contables',
+    asiento_conciliado = fields.One2many('account.move.line', related='move_id.line_ids', string='Asientos conciliados', readonly=True)
+    asiento_conl_apply = fields.One2many('account.move.line', related='move_apply_id.line_ids', string='Asientos conciliados aplicados',
                                          readonly=True)
     amount_available_conversion = fields.Monetary("Conversión Monto Disponible", currency_field='conversion_currency', store=True)
     amount_available = fields.Monetary("Amount Available", currency_field='currency_id')
