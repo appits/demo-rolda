@@ -608,8 +608,9 @@ class AccountWhIva(models.Model):
                             elif ml.debit:
                                 ml.write({
                                     'amount_currency': (ml.debit/f_xc)})
-                    ret_move.post()
                     '''
+                    ret_move.post()
+                
                     # make the withholding line point to that move
 
                     rl = {'move_id': ret_move.id}
