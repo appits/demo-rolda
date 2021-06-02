@@ -20,7 +20,7 @@ class ExportBankPayments(models.Model):
     state = fields.Selection([
         ('draft', 'Borrador'),
         ('done', 'Confirmado')
-    ], string='Tipo de transacción', default='draft', copy=False)
+    ], string='Estado de transacción', default='draft', copy=False)
     condition = fields.Char('Condición', default='9', readonly=True)
     bank_id = fields.Many2one('account.journal', 'Banco', states=_READONLY_STATES)
     date_start = fields.Date('Fecha inicio', states=_READONLY_STATES)
