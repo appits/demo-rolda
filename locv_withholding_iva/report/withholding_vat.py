@@ -205,9 +205,9 @@ class IvaReport(models.AbstractModel):
         direction = ((partner.street and partner.street + ', ') or '') +\
                     ((partner.street2 and partner.street2 + ', ') or '') +\
                     ((partner.city and partner.city + ', ') or '') +\
-                    ((partner.state_id.name and partner.state_id.name + ',')or '')+ \
-                    ((partner.country_id.name and partner.country_id.name + '') or '')+\
-                    ((partner.zip and partner.zip + '')or '')
+                    ((partner.state_id.name and partner.state_id.name + ', ') or '') +\
+                    ((partner.country_id.name and partner.country_id.name + ', ') or '') +\
+                    ((partner.zip and partner.zip + '') or '')
         #if direction == '':
         #    raise ValidationError ("Debe ingresar los datos de direccion en el proveedor")
             #direction = 'Sin direccion'
