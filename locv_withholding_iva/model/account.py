@@ -25,4 +25,4 @@ class AccountTax(models.Model):
         						('islr', 'ISLR'),
         						('responsability','Responsabilidad social'),
         						('municipal', 'Municipal'),
-        						('fiscal', 'Timbre fiscal')],required=True,help="Selecione el Tipo de Impuesto",string="Tipo de Impuesto")
+        						('fiscal', 'Timbre fiscal')],help="Selecione el Tipo de Impuesto",string="Tipo de Impuesto")
