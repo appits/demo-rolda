@@ -6,7 +6,6 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 
 from odoo import api, fields, models
 from odoo.tools.translate import _
-from odoo.addons import decimal_precision as dp
 
 ISLR_XML_WH_LINE_TYPES = [('invoice', 'Invoice'), ('employee', 'Employee')]
 
@@ -372,21 +371,21 @@ class IslrXmlWhLine(models.Model):
     base = fields.Float(
             'Cantidad base', required=True,
             help="Amount where a withholding is going to be computed from",
-            digits=dp.get_precision('Withhold ISLR'))
+            digits='Withhold ISLR')
     raw_base_ut = fields.Float(
-            'Cantidad de UT', digits=dp.get_precision('Withhold ISLR'),
+            'Cantidad de UT', digits='Withhold ISLR',
             help="Cantidad de UT")
     raw_tax_ut= fields.Float(
             'Impuesto retenido de UT',
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Impuesto retenido de UT")
     porcent_rete = fields.Float(
             'Tasa de retención', required=True, help="Tasa de retención",
-            digits=dp.get_precision('Withhold ISLR'))
+            digits='Withhold ISLR')
     wh = fields.Float(
             'Cantidad retenida', required=True,
             help="Cantidad retenida a socio",
-            digits=dp.get_precision('Withhold ISLR'))
+            digits='Withhold ISLR')
     rate_id = fields.Many2one(
             'islr.rates', 'Tipo de persona',
             domain="[('concept_id','=',concept_id)]", required=False,
@@ -406,7 +405,7 @@ class IslrXmlWhLine(models.Model):
             help="Socio objeto de retención")
     sustract = fields.Float(
             'Subtrahend', help="Subtrahend",
-            digits=dp.get_precision('Withhold ISLR'))
+            digits='Withhold ISLR')
     islr_wh_doc_inv_id = fields.Many2one(
             'islr.wh.doc.invoices', 'Factura retenida',
             help="Facturas retenidas")
