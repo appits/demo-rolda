@@ -10,6 +10,7 @@ from odoo.exceptions import UserError, Warning, ValidationError
 
 class IvaReport(models.AbstractModel):
     _name = 'report.locv_withholding_iva.template_wh_vat'
+    _description = 'IVA withholding report template'
     #_name = 'report.locv_withholding_iva.template_wh_vat'
 
     #_inherit = 'report.abstract_report'

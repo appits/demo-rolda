@@ -15,7 +15,7 @@
                     <field name="doc_type"/>
                     <field name="invoice_id"/>
                     <field name="iwdl_id"/>
-                    <field name="report_z_id"/>
+                    <!--field name="report_z_id"/-->
                     <field name="ctrl_number"/>
                     <field name="accounting_date"/>
                     <field name="emission_date"/>

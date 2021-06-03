@@ -39,7 +39,7 @@ class SaleOrderInnherit(models.Model):
     people_type_company = fields.Selection([
         ('pjdo', 'PJDO    Persona Jurídica Domiciliada'),
         ('pjnd', 'PJND    Persona Jurídica No Domiciliada')
-    ], 'Tipo de Persona', related='partner_id.people_type_company')
+    ], 'Tipo de Persona Jurídica', related='partner_id.people_type_company')
 
 
     people_type_individual = fields.Selection([

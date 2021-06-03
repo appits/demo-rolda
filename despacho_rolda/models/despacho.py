@@ -14,7 +14,7 @@ class Despacho(models.Model):
     driver_id = fields.Many2one('res.partner', 'Chofer')
     vat = fields.Char(related='driver_id.identification_id', string='CI')
     assistant_id = fields.Many2one('res.partner', 'Ayudante')
-    vat_assistant = fields.Char(related='assistant_id.identification_id', string='CI')
+    vat_assistant = fields.Char(related='assistant_id.identification_id', string='CI asistente')
     seal = fields.Char('Precinto', help='Número de precinto relativo a la orden de despacho a realizar.')
     notes = fields.Text('Observaciones')
     line_ids = fields.Many2many('account.move', 'move_despacho_rel', 'despacho_id', 'move_id', 'Facturas')

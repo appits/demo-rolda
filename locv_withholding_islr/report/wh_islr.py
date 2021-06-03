@@ -35,6 +35,7 @@ from odoo.exceptions import UserError
 
 class RepComprobanteIslr(models.AbstractModel):
     _name = 'report.locv_withholding_islr.template_wh_islr'
+    _description = 'Withholding islr report template'
 
     # _inherit = 'report.abstract_report'
     # _template = 'l10n_ve_withholding_iva.template_wh_vat'

@@ -13,14 +13,12 @@ class ResParther(models.Model):
     property_county_wh_payable = fields.Many2one('account.account',
                                                  company_dependent=True,
                                                  string="Cuenta de Compra para Impuesto Municipal",
-                                                 oldname="property_county_wh_payable",
                                                  help="This account will be used debit local withholding amount",
                                                 )
 
     property_county_wh_receivable = fields.Many2one('account.account',
                                                     company_dependent=True,
                                                     string="Cuenta de Venta para Impuesto Municipal",
-                                                    oldname="property_county_wh_receivable",
                                                     help="This account will be used credit local withholding amount",
                                                    )
 

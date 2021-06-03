@@ -13,4 +13,8 @@ class AccountMove(models.Model):
     def _compute_total_qty(self):
         for record in self:
             record.total_qty = sum(record.invoice_line_ids.mapped('quantity'))
-            record.total_weight = sum(record.invoice_line_ids.mapped('product_id.weight'))
+            total_weight = 0
+            for line in record.invoice_line_ids:
+                total_weight += line.quantity * line.product_id.weight
+            record.total_weight = total_weight 
+            #record.total_weight = sum(record.invoice_line_ids.mapped('product_id.weight'))

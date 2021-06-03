@@ -107,7 +107,7 @@ class AccountMove(models.Model):
             ('pro', 'Retención procesada, línea xml generada'),
             ('no_pro', 'Retención no procesada'),
             ('tasa', 'No exceda la tasa, línea xml generada'),
-            ], string='Status', readonly=True, default='no_pro',
+            ], string='Estado de Retención', readonly=True, default='no_pro',
             help=''' * La \'Retención procesada, línea xml generada\'
             es usada cuando el usuario procesa la Retencion de ISLR.
             * La 'Retencion no Procesada\' state es cuando un usuario realiza una factura y se genera el documento de retencion de islr y aun no esta procesado.
