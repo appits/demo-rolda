@@ -16,6 +16,7 @@ class FiscalBookWizard(models.TransientModel):
     Sales book wizard implemented using the osv_memory wizard system
     """
     _name = "fiscal.book.wizard"
+    _description = 'Fiscal Book wizard'
 
     TYPE = [("sale", _("Venta")),
             ("purchase", _("Compra")),
@@ -124,6 +125,7 @@ class FiscalBookWizard(models.TransientModel):
 class PurchaseBook(models.AbstractModel):
 
     _name = 'report.locv_fiscal_book.report_fiscal_purchase_book'
+    _description = 'Purchases Book Report Wizard'
 
 
     @api.model
@@ -513,6 +515,7 @@ class PurchaseBook(models.AbstractModel):
 #
 class FiscalBookSaleReport(models.AbstractModel):
     _name = 'report.locv_fiscal_book.report_fiscal_sale_book'
+    _description = 'Sales Book Report Wizard'
 
     @api.model
     def _get_report_values(self, docids, data=None):

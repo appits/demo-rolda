@@ -50,6 +50,7 @@ class WhVatInstaller(models.TransientModel):
 class WhIvaConfig(models.TransientModel):
     _name = 'wh_iva.config'
     _inherit = 'res.config'
+    _description = 'withholding iva configuration'
 
     name = fields.Char(string='Name', size=64, help='name')
     wh = fields.Boolean(
