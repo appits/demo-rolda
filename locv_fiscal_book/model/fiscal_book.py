@@ -2269,7 +2269,7 @@ class FiscalBookLines(models.Model):
                                  help="Factura relacionada con esta línea de libro")
     iwdl_id = fields.Many2one('account.wh.iva.line', 'Retencion de IVA',
                               help="Retención de la línea iva relacionada con esta línea del libro")
-    report_z_id = fields.Many2one('datos.zeta.diario', 'reportes z ids')
+    #report_z_id = fields.Many2one('datos.zeta.diario', 'reportes z ids')
     n_ultima_factZ = fields.Char('Numero de Ultima Factura')
     # TODO CAMPO RELACIONADO CON EL MODELO customs.form DEL MODULO l10n_ve_imex
     # cf_id = fields.Many2one('customs.form', 'Customs Form',
