@@ -10,6 +10,7 @@ from odoo import models, fields, api, exceptions, _
 
 class AccountWhIvaLineTax(models.Model):
     _name = 'account.wh.iva.line.tax'
+    _description = 'Withholding iva line'
 
     move_id = fields.Many2one('account.move',string='Invoice', required=True,
         ondelete='restrict', help="Withholding invoice")

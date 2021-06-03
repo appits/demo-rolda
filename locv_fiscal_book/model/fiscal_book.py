@@ -2408,6 +2408,7 @@ class AdjustmentBookLine(models.Model):
                 ('NC', 'Nota de Credito'), ]
 
     _name = 'adjustment.book.line'
+    _description = 'Adjustment Book Line'
 
     date_accounting = fields.Date('Fecha Contable', required=True, help="Date accounting for adjustment book")
     date_admin = fields.Date('Date Administrative', required=True,

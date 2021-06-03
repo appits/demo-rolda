@@ -11,6 +11,7 @@ from odoo.addons import decimal_precision as dp
 class TxtIva(models.Model):
     _name = "txt.iva"
     _inherit = ['mail.thread']
+    _description = 'txt iva'
 
     @api.model
     def _default_period_id(self):
@@ -491,6 +492,7 @@ class TxtIva(models.Model):
 class TxtIvaLine(models.Model):
     _name = "txt.iva.line"
     _rec_name = 'partner_id'
+    _description = 'txt iva line'
 
     partner_id = fields.Many2one(
         'res.partner', string='Comprador/Vendedor', readonly=True,
