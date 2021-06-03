@@ -2277,8 +2277,8 @@ class FiscalBookLines(models.Model):
     parent_id = fields.Many2one("fiscal.book.line", string="Linea consolidada",
                                 ondelete='cascade', help="Línea consolidada no contribuyente. Indique la identificación de la"
                                                          "línea consolidada a la que pertenece esta línea de contribuyente")
-    parent_left = fields.Integer('Padre izquierdo', select=1)
-    parent_right = fields.Integer('Padre Derecho', select=1)
+    parent_left = fields.Integer('Padre izquierdo', index=1)
+    parent_right = fields.Integer('Padre Derecho', index=1)
     child_ids = fields.One2many("fiscal.book.line", "parent_id", string="Línea de detalle para no contribuyentes",
                                 help="Grupo no contribuyente de líneas de libros que representa esta línea")
 
@@ -2418,7 +2418,7 @@ class AdjustmentBookLine(models.Model):
     amount = fields.Float('Documento de importe en retención de IVA', # digits='Account',
                           required=True,
                           help="Documento de importe en retención de IVA")
-    type_doc = fields.Selection(TYPE_DOC, 'Tipo de Documento', select=True, required=True,
+    type_doc = fields.Selection(TYPE_DOC, 'Tipo de Documento', index=True, required=True,
                                 help="Tipo de documento para libro de ajustes"
                                      " -Invoice(F),-Debit Note(dn),-Credit Note(cn)")
     doc_affected = fields.Char('Affected Document', size=256, required=True,
