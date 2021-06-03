@@ -22,7 +22,7 @@ class TxtIva(models.Model):
         return periods and periods[0].id or False
 
     name = fields.Char(
-        string='Descripción', size=128, required=True, select=True,
+        string='Descripción', size=128, required=True, index=True,
         default=lambda self: 'Retención IVA ' + time.strftime('%m/%Y'),
         help="Description about statement of withholding income")
     company_id = fields.Many2one(
@@ -34,7 +34,7 @@ class TxtIva(models.Model):
         ('confirmed', 'Confirmado'),
         ('done', 'Realizado'),
         ('cancel', 'Cancelado')
-        ], string='Estado', select=True, readonly=True, default='draft',
+        ], string='Estado', index=True, readonly=True, default='draft',
         help="proof status")
     period_id = fields.Date(string='Periodo')
     type = fields.Boolean(

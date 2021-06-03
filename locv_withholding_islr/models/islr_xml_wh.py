@@ -41,7 +41,7 @@ class IslrXmlWhDoc(models.Model):
 
 
     name = fields.Char(
-            string='Descripción', size=128, required=True, select=True,
+            string='Descripción', size=128, required=True, index=True,
             default='Retención de ingresos ' + time.strftime('%m/%Y'),
             help="Descripción de la declaración de retención de ingresos")
     company_id = fields.Many2one(
