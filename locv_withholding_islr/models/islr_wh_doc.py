@@ -439,7 +439,7 @@ class IslrWhDoc(models.Model):
 
         return True
 
-    @api.onchange('partner_id','inv_type')
+    @api.onchange('partner_id')
     def onchange_partner_id(self):
         """ Unlink all taxes when change the partner in the document.
         @param type: invoice type
