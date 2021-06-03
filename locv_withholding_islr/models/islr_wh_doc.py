@@ -6,7 +6,6 @@ from odoo import api
 from odoo import fields, models
 from odoo import exceptions
 from odoo.tools.translate import _
-from odoo.addons import decimal_precision as dp
 
 
 class IslrWhDoc(models.Model):
@@ -199,7 +198,7 @@ class IslrWhDoc(models.Model):
             help="Compañia")
     amount_total_ret = fields.Float(
             compute='_get_amount_total', store=True, string='Monto total',
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Importe total retenido")
     concept_ids = fields.One2many(
             'islr.wh.doc.line', 'islr_wh_doc_id', 'Concepto de retención de ingresos',
@@ -1692,20 +1691,20 @@ class IslrWhDocLine(models.Model):
             string='Moneda retenida Monto retenido', multi='all',
             help="Monto retenido del monto base")
     base_amount= fields.Float(
-            'Cantidad base', digits=dp.get_precision('Withhold ISLR'),
+            'Cantidad base', digits='Withhold ISLR',
             help="Cantidad base")
     currency_base_amount= fields.Float(compute='_amount_all', method=True, digits=(16, 2),
             string='Monto base en moneda extranjera', multi='all',
             help="Monto retenido del monto base")
     raw_base_ut= fields.Float(
-            'Cantidad de UT', digits=dp.get_precision('Withhold ISLR'),
+            'Cantidad de UT', digits='Withhold ISLR',
             help="Cantidad de UT")
     raw_tax_ut= fields.Float(
             'Impuesto retenido de UT',
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Impuesto retenido de UT")
     subtract = fields.Float(
-            'Sustraer', digits=dp.get_precision('Withhold ISLR'),
+            'Sustraer', digits='Withhold ISLR',
             help="Sustraer")
     islr_wh_doc_id = fields.Many2one(
             'islr.wh.doc', 'Retener documento', ondelete='cascade',
@@ -1715,11 +1714,11 @@ class IslrWhDocLine(models.Model):
             help="Concepto de retención asociado a esta tasa")
     retencion_islr = fields.Float(
             'Tasa de retención',
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Tasa de retención")
     retention_rate = fields.Float(compute=_retention_rate, method=True, string='Tasa de retención calculada',
              help="Withhold rate has been applied to the invoice",
-             digits=dp.get_precision('Withhold ISLR'))
+             digits='Withhold ISLR')
     xml_ids = fields.One2many(
             'islr.xml.wh.line', 'islr_wh_doc_line_id', 'XML Lines',
             help='ID de línea de factura de retención XML')
@@ -1746,10 +1745,10 @@ class IslrWhHistoricalData(models.Model):
             help="Concepto de retención asociado a estos datos históricos")
     raw_base_ut = fields.Float(
             'Cantidad acumulada de UT', required=True,
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Cantidad de UT")
     raw_tax_ut = fields.Float(
             'Impuesto retenido de UT acumulado', required=True,
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Impuesto retenido de UT")
 
