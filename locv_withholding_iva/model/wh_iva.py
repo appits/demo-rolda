@@ -4,7 +4,6 @@
 
 import time
 
-from odoo.addons import decimal_precision as dp
 from odoo import models, fields, api, exceptions, _
 
 
@@ -31,11 +30,11 @@ class AccountWhIvaLineTax(models.Model):
         related='inv_tax_id.name', store=True, readonly=True,
         ondelete='set null', help=" Tax Name")
     base = fields.Float(
-        string='Base del Impuesto', digit=dp.get_precision('Withhold'),
+        string='Base del Impuesto', digit='Withhold',
         store=True, compute='_get_base_amount',
         help="Tax Base")
     amount = fields.Float(
-        string='Cantidad gravada', digits=dp.get_precision('Withhold'),
+        string='Cantidad gravada', digits='Withhold',
         store=True, compute='_get_base_amount',
         help="Withholding tax amount")
     company_id = fields.Many2one(
@@ -898,7 +897,7 @@ class AccountWhIva(models.Model):
         string='Líneas de retención de IVA',
         help="Líneas de retención de IVA")
     amount_base_ret = fields.Float(
-        string='Importe', # digits=dp.get_precision('Withhold'),
+        string='Importe', # digits='Withhold',
         compute='_amount_ret_all', store=True,
         help=" Base para Calcular monto del impuesto")
     total_tax_ret = fields.Float(

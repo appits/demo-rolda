@@ -2,7 +2,6 @@
 
 import time
 
-from odoo.addons import decimal_precision as dp
 from odoo import fields,models
 
 
@@ -22,7 +21,7 @@ class L10nUt(models.Model):
             help="Date on which goes into effect the new Unit Tax Unit")
 
     amount = fields.Float(
-            'Amount', digits=dp.get_precision('Amount Bs per UT'),
+            'Amount', digits='Amount Bs per UT',
             help="Amount of the tax unit in bs", required=True)
 
     user_id = fields.Many2one(

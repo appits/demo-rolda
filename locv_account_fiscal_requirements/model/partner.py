@@ -4,7 +4,6 @@
 
 import re
 
-from odoo.addons import decimal_precision as dp
 from odoo import fields,models,api
 #from odoo.osv.orm import except_orm
 from odoo.tools.translate import _
@@ -28,7 +27,7 @@ class ResPartnerInherit(models.Model):
 
     wh_iva_rate = fields.Float(
         string='Rate',
-        digits=dp.get_precision('Withhold'),
+        digits='Withhold',
         help="Vat Withholding rate")
 
     wh_iva_agent = fields.Boolean(
