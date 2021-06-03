@@ -1532,8 +1532,9 @@ class IslrWhDocInvoices(models.Model):
 
                 [('partner_id', '=', inv_brw.partner_id.id),
                  ('concept_id', '=', concept_id),
-                 ('fiscalyear_id', '=',
-                  inv_brw.islr_wh_doc_id.fiscalyear_id.id)])
+                 #('fiscalyear_id', '=',
+                  #inv_brw.islr_wh_doc_id.fiscalyear_id.id)
+                  ])
             for iwhd_brw in iwhd_obj.browse( iwhd_ids):
                 base_ut += iwhd_brw.raw_base_ut
                 rate2['cumulative_base_ut'] += iwhd_brw.raw_base_ut
@@ -1726,7 +1727,7 @@ class IslrWhDocLine(models.Model):
             'islr.wh.doc.invoices', 'Factura retenida', ondelete='cascade',
             help="Facturas retenidas")
     partner_id = fields.Many2one('res.partner', related='islr_wh_doc_id.partner_id', string='Partner', store=True)
-    fiscalyear_id = fields.Many2one( 'account.fiscalyear', string='Fiscalyear',store=True)
+    #fiscalyear_id = fields.Many2one( 'account.fiscalyear', string='Fiscalyear',store=True)
 
 
 class IslrWhHistoricalData(models.Model):
@@ -1737,9 +1738,11 @@ class IslrWhHistoricalData(models.Model):
     partner_id = fields.Many2one(
             'res.partner', 'Partner', readonly=False, required=True,
             help="Partner for this historical data")
+    '''
     fiscalyear_id = fields.Many2one(
             'account.fiscalyear', 'Fiscal Year', readonly=False, required=True,
             help="Fiscal Year to applicable to this cumulation")
+    '''
     concept_id = fields.Many2one(
             'islr.wh.concept', 'Entrada de diario', required=True,
             help="Concepto de retención asociado a estos datos históricos")
