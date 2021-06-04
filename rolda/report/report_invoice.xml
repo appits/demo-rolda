@@ -31,7 +31,7 @@
                   <td class="py-0"><strong>Vence: </strong><span class="pl-3" t-field="o.invoice_date_due"/></td>
                 </tr>
                 <tr>
-                  <td class="py-0"><strong>Orden de Compra: </strong> <span t-field="o.invoice_origin"/></td>
+                  <td class="py-0"><strong>Orden de Compra: </strong> <span t-field="o.ref"/></td>
                   <td class="py-0"><strong>Cotización: </strong> <span t-field="o.invoice_origin"/></td>
                 </tr>
                 <tr>
@@ -78,6 +78,8 @@
                     <td name="account_invoice_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
                     <td class="text-right">
                       <span t-field="line.quantity"/>
+                      <![CDATA[&nbsp;]]>
+                      <![CDATA[&nbsp;]]>
                       <span t-field="line.product_uom_id" groups="uom.group_uom"/>
                     </td>
                     <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
@@ -170,7 +172,7 @@
           </div>
         </div>
         <div class="footer footer-rolda">
-          <div class="clearfix text-center">
+          <div class="clearfix text-left">
             <p class="bg-light">Son <span class="text-uppercase" t-esc="o.currency_id.amount_to_text(o.amount_total)"/></p>
           </div>
         </div>
