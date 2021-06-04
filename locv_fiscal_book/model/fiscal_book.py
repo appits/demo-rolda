@@ -1015,6 +1015,7 @@ class FiscalBook(models.Model):
 
         printer_fiscal = self.company_id.printer_fiscal
         busq = self.browse(fb_id)
+        '''
         if printer_fiscal == True and busq.type == 'sale':
             tabla_report_z = self.env['datos.zeta.diario']
             date_from1 = ''
@@ -1084,7 +1085,7 @@ class FiscalBook(models.Model):
                               }
                     data.append((0, 0, values))
 
-
+        '''
         if inv_iva:
 
                 orphan_iwdl_ids = self._get_orphan_iwdl_ids(fb_id)
@@ -1514,6 +1515,7 @@ class FiscalBook(models.Model):
 
 
         for fbl in self.fbl_ids:
+            '''
             if fbl.report_z_id:
                 hola = 'dfdfd'
                 if fbl.report_z_id:
@@ -1535,7 +1537,7 @@ class FiscalBook(models.Model):
                     if  float(fbl.report_z_id.ventas_exento) != 0:
                         base = float(fbl.report_z_id.ventas_exento) - float(fbl.report_z_id.nota_de_credito_exento)
                         base_sum[fbl.type]['exento'] += base
-
+            '''
             if fbl.iwdl_id.invoice_id:
                 sign = 1 if fbl.doc_type != 'N/CR' else -1
                 for ait in fbl.iwdl_id.tax_line:
@@ -1583,14 +1585,14 @@ class FiscalBook(models.Model):
         base_amount = 0.0
         for fbl_brw in self.fbl_ids:
             sign = 1 if fbl_brw.doc_type != 'N/CR' else -1
-
+            '''
             if fbl_brw.report_z_id:
                 if float(fbl_brw.report_z_id.base_imponible_ventas_iva_g) != 0:
                     base = float(fbl_brw.report_z_id.base_imponible_ventas_iva_g) - float(fbl_brw.report_z_id.bi_iva_g_en_nota_de_credito)
                     amount = float(fbl_brw.report_z_id.impuesto_iva_g) - float(fbl_brw.report_z_id.impuesto_iva_g_en_nota_de_credito)
                     base_amount += base
                     tax_amount += amount
-
+            '''
 
             if fbl_brw.iwdl_id.invoice_id:
                 for ait in fbl_brw.iwdl_id.tax_line:
@@ -1722,6 +1724,7 @@ class FiscalBook(models.Model):
         base = 0
         fiscal_book = self.browse(fb_id)
         for fbl in fiscal_book.fbl_ids:
+            '''
             if fbl.report_z_id:
                 fiscal_taxes = self.env['fiscal.book.taxes']
                 line_taxes = {'fb_id': fb_id, 'fbl_id': fbl.id, 'base_amount': 0.0, 'tax_amount': 0.0, 'name': ' ', 'exento':0 }
@@ -1729,7 +1732,7 @@ class FiscalBook(models.Model):
                 amount_field_data = {'total_with_iva':
                                          0.0,
                                      'vat_sdcf': 0.0, 'vat_exempt': 0.0, 'vat_general_base': 0.0, }
-
+            
 
                 if float(fbl.report_z_id.base_imponible_ventas_iva_g) != 0:
                     base = float(fbl.report_z_id.base_imponible_ventas_iva_g) - float(fbl.report_z_id.bi_iva_g_en_nota_de_credito)
@@ -1775,7 +1778,7 @@ class FiscalBook(models.Model):
                 amount = base = base_exento = 0
                 name = ' '
             ####################################### antes es report z#########################
-
+            '''
             if fbl.iwdl_id.invoice_id:
 
                 fiscal_taxes = self.env['fiscal.book.taxes']
@@ -1937,6 +1940,7 @@ class FiscalBook(models.Model):
                 sign = 1
             data = {}.fromkeys(field_names, 0.0)
             busq = ' '
+            '''
             if fbl_brw.report_z_id:
 
                 for field_name in field_names:
@@ -1961,7 +1965,7 @@ class FiscalBook(models.Model):
                             data[field_name] += field_amount == 'base' and base \
                                                 or tax_amount
                 fbl_brw.write(data)
-
+            '''
             if fbl_brw.iwdl_id.invoice_id:
 
                for line in fbl_brw.iwdl_id.invoice_id.invoice_line_ids:
