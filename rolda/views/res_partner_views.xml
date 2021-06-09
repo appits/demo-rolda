@@ -10,6 +10,8 @@
       </field>
       <field name="category_id" position="after">
         <field name="sale_zone"/>
+        <field name="matriz_1"/>
+        <field name="matriz_2"/>
       </field>
       <notebook position="inside">
         <page string="Otra Información">
