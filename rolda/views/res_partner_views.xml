@@ -13,11 +13,16 @@
       </field>
       <notebook position="inside">
         <page string="Otra Información">
-          <group>
+          <group col='6' colspan='2'>
             <field name="segment"/>
             <field name="salesman_code"/>
             <field name="nielsen_code"/>
             <field name="nielsen"/>
+          </group>
+          <group col='6' colspan='2'>
+            <field name="code_state"/>
+            <field name="code_municipality"/>
+            <field name="code_parish"/>
           </group>
         </page>
       </notebook>
