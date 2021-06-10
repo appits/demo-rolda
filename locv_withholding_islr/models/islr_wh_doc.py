@@ -718,8 +718,8 @@ class IslrWhDoc(models.Model):
                 name = 'COMP. RET. ISLR ' + ret.name + \
                     ' Doc. ' + (line.invoice_id.supplier_invoice_number or '')
             else:
-                name = 'COMP. RET. ISLR ' + ret.number + \
-                    ' Doc. ' + (line.invoice_id.display_name or '')
+                name = 'COMP. RET. ISLR ' + ret.name + \
+                    ' Doc. ' + (line.invoice_id.name or '')
             writeoff_account_id = False
             writeoff_journal_id = False
             #amount = line.amount_islr_ret
