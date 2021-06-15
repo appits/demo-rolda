@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="rolda_template_wh_vat" inherit_id="locv_withholding_iva.template_wh_vat">
+    <xpath expr="//table/tr/td" position="inside">
+      <img src="/rolda/static/src/img/logo.png" class="float-left" height="100px" alt="Logo"/>
+    </xpath>
+    <xpath expr="//table[4]/tr[2]/td[10]/t" position="replace">
+      <t t-foreach="amount_tax_base" t-as="doc">
+        <span t-esc="doc_value"/>
+      </t>
+    </xpath>
+    <xpath expr="//table[4]/tr[2]/td[11]/t" position="replace">
+      <t t-foreach="taxes_name" t-as="doc">
+        <span t-esc="doc"/>
+      </t>
+    </xpath>
+    <xpath expr="//table[4]/tr[2]/td[12]/t" position="replace">
+      <t t-foreach="amount_tax_general" t-as="doc">
+        <span t-esc="doc_value"/>
+      </t>
+    </xpath>
+  </template>
+</odoo>

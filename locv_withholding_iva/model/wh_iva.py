@@ -4,12 +4,12 @@
 
 import time
 
-from odoo.addons import decimal_precision as dp
 from odoo import models, fields, api, exceptions, _
 
 
 class AccountWhIvaLineTax(models.Model):
     _name = 'account.wh.iva.line.tax'
+    _description = 'Withholding iva line'
 
     move_id = fields.Many2one('account.move',string='Invoice', required=True,
         ondelete='restrict', help="Withholding invoice")
@@ -30,11 +30,11 @@ class AccountWhIvaLineTax(models.Model):
         related='inv_tax_id.name', store=True, readonly=True,
         ondelete='set null', help=" Tax Name")
     base = fields.Float(
-        string='Base del Impuesto', digit=dp.get_precision('Withhold'),
+        string='Base del Impuesto', digit='Withhold',
         store=True, compute='_get_base_amount',
         help="Tax Base")
     amount = fields.Float(
-        string='Cantidad gravada', digits=dp.get_precision('Withhold'),
+        string='Cantidad gravada', digits='Withhold',
         store=True, compute='_get_base_amount',
         help="Withholding tax amount")
     company_id = fields.Many2one(
@@ -594,7 +594,7 @@ class AccountWhIva(models.Model):
                         abs(amount), account_id, journal_id,
                         writeoff_account_id,writeoff_journal_id,
                         date,name,wh_iva_tax_line, 'wh_iva')
-
+                    '''
                     if (line.invoice_id.currency_id.id != line.invoice_id.company_id.currency_id.id):
                         f_xc = line.invoice_id.x_studio_field_l5IHS
                         for ml in self.env['account.move.line'].search([('move_id','=',ret_move.id)]):
@@ -608,7 +608,9 @@ class AccountWhIva(models.Model):
                             elif ml.debit:
                                 ml.write({
                                     'amount_currency': (ml.debit/f_xc)})
+                    '''
                     ret_move.post()
+                
                     # make the withholding line point to that move
 
                     rl = {'move_id': ret_move.id}
@@ -851,7 +853,7 @@ class AccountWhIva(models.Model):
         help="Internal withholding reference")
     '''
     number_customer= fields.Char(
-        string='Numero de Comprobante', size=32,
+        string='Numero de Comprobante Cliente', size=32,
         help="Numero de Retencion de IVA")
     number = fields.Char(
         string='Numero de Comprobante', size=32,
@@ -895,7 +897,7 @@ class AccountWhIva(models.Model):
         string='Líneas de retención de IVA',
         help="Líneas de retención de IVA")
     amount_base_ret = fields.Float(
-        string='Importe', # digits=dp.get_precision('Withhold'),
+        string='Importe', # digits='Withhold',
         compute='_amount_ret_all', store=True,
         help=" Base para Calcular monto del impuesto")
     total_tax_ret = fields.Float(
@@ -916,7 +918,7 @@ class AccountWhIva(models.Model):
         'res.partner', string='Socio de terceros',
         help='Socio tercero')
 
-    number_comprobante = fields.Char(string='Numero de Comprobante', size=25)
+    number_comprobante = fields.Char(string='Numero de Comprobante 2', size=25)
 
     @api.depends('wh_lines.amount_tax_ret', 'wh_lines.base_ret')
     def _amount_ret_all(self):

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_partner_form_inherit_rolda" model="ir.ui.view">
+    <field name="name">res.partner.form.inherit.rolda</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <field name="vat" position="after">
+        <field name="nit"/>
+      </field>
+      <field name="category_id" position="after">
+        <field name="sale_zone"/>
+        <field name="matriz_1"/>
+        <field name="matriz_2"/>
+      </field>
+      <notebook position="inside">
+        <page string="Otra Información">
+          <group col='6' colspan='2'>
+            <field name="segment"/>
+            <field name="salesman_code"/>
+            <field name="nielsen_code"/>
+            <field name="nielsen"/>
+          </group>
+          <group col='6' colspan='2'>
+            <field name="code_state"/>
+            <field name="code_municipality"/>
+            <field name="code_parish"/>
+          </group>
+        </page>
+      </notebook>
+    </field>
+  </record>
+</odoo>

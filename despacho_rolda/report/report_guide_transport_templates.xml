@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="report_despacho_transport_document">
+    <t t-call="web.html_container">
+      <t t-call="despacho_rolda.despacho_layout_standard">
+        <t t-set="title" t-value="'GUÍA DE DESPACHO'"/>
+        <t t-set="no_info_address" t-value="True"/>
+        <t t-set="left_header">
+          <table>
+            <tr>
+              <td>Guía Nro.: </td>
+              <td class="pl-2"><t t-esc="despacho['name']"/></td>
+            </tr>
+          </table>
+        </t>
+        <div class="oe_structure"/>
+        <div class="page">
+          <div class="table-bordered">
+            <table class="table table-borderless">
+              <tr>
+                <td colspan="2" class="py-0"><strong>Compañía de transporte:</strong> <span t-esc="despacho['transport_name']"/></td>
+                <td class="py-0"><strong>Vehículo:</strong> <span t-esc="despacho['license']"/></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="py-0"><strong>Chofer:</strong> <span t-esc="despacho['driver_name']"/> <span t-esc="despacho['driver_vat']"/></td>
+                <td class="py-0"><strong>Ciudad Destino:</strong> <span /></td>
+              </tr>
+              <tr>
+                <td class="py-0"><strong>Cliente:</strong> <span/></td>
+                <td class="py-0"><strong>R.I.F.:</strong> <span/></td>
+                <td class="py-0"><strong>Orden Nro.:</strong> <span /></td>
+              </tr>
+            </table>
+          </div>
+          <table class="table table-despacho-customer">
+            <thead>
+              <tr>
+                <th class="pb-0 text-left"><span>EAN</span></th>
+                <th class="pb-0 text-left"><span>Producto</span></th>
+                <th class="pb-0 text-right"><span>Presentación</span></th>
+                <th class="pb-0 text-right text-nowrap"><span>Bultos</span></th>
+                <th class="pb-0 text-right"><span>Unidades</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-set="total_package" t-value="0.0"/>
+              <t t-set="total_units" t-value="0.0"/>
+              <t t-foreach="despacho['lines']" t-as="line">
+                <tr>
+                  <td><span t-esc="line['barcode']"/></td>
+                  <td><span t-esc="line['name']"/></td>
+                  <td class="text-right"><span t-esc="line['quantity']"/> <span t-esc="line['uom_name']"/></td>
+                  <td class="text-right"><span t-esc="line['package']"/></td>
+                  <td class="text-right"><span t-esc="line['quantity']"/></td>
+                </tr>
+                <t t-set="total_package" t-value="total_package + line['package']"/>
+                <t t-set="total_units" t-value="total_units + line['quantity']"/>
+              </t>
+            </tbody>
+          </table>
+        </div>
+        <t t-set="top_footer">
+          <table class="table table-rolda-footer">
+            <tr>
+              <td>Precinto: <span t-esc="despacho['seal']"/></td>
+              <td>Total Bultos: <span t-esc="'{:,.2f}'.format(total_package)"/></td>
+              <td>Total Unidades: <span t-esc="'{:,.2f}'.format(total_units)"/></td>
+              <td>Total Peso: <span t-esc="'{:,.2f}'.format(despacho['total_weight'])"/></td>
+            </tr>
+          </table>
+          <table class="table table-rolda-footer" style="page-break-inside: avoid; font-size: 80%;">
+            <tr>
+              <td class="pt-0 w-20">Aprobación transporte</td>
+              <td class="pt-0 w-20">Preparador</td>
+              <td class="pt-0 w-20">Chequeador</td>
+              <td class="pt-0 w-20">Conforme transportista</td>
+              <td class="pt-0 w-20">Retorno de facturas despachadas</td>
+            </tr>
+            <tr>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+              <td class="py-4"/>
+            </tr>
+          </table>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

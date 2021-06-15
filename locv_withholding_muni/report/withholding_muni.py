@@ -10,6 +10,7 @@ from odoo.exceptions import UserError, Warning, ValidationError
 
 class MuniReport(models.AbstractModel):
     _name = 'report.locv_withholding_muni.template_wh_muni2'
+    _description = 'municipal withholding report template'
 
     @api.model
     def _get_report_values(self, docids, data=None):

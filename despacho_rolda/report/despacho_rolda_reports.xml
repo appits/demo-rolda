@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="paperformat_despacho_rolda" model="report.paperformat">
+    <field name="name">Despacho Rolda</field>
+    <field name="format">Letter</field>
+    <field name="page_height">0</field>
+    <field name="page_width">0</field>
+    <field name="orientation">Portrait</field>
+    <field name="margin_top">60</field>
+    <field name="margin_bottom">42</field>
+    <field name="margin_left">2</field>
+    <field name="margin_right">2</field>
+    <field name="header_line" eval="False"/>
+    <field name="header_spacing">55</field>
+    <field name="dpi">90</field>
+  </record>
+  <record id="paperformat_despacho_transport_rolda" model="report.paperformat">
+    <field name="name">Despacho Transporte Rolda</field>
+    <field name="format">Letter</field>
+    <field name="page_height">0</field>
+    <field name="page_width">0</field>
+    <field name="orientation">Portrait</field>
+    <field name="margin_top">32</field>
+    <field name="margin_bottom">42</field>
+    <field name="margin_left">2</field>
+    <field name="margin_right">2</field>
+    <field name="header_line" eval="False"/>
+    <field name="header_spacing">28</field>
+    <field name="dpi">90</field>
+  </record>
+  <report
+    id="report_guide_consolidated"
+    model="wz.despacho.print.guide"
+    string="Consolidado"
+    report_type="qweb-pdf"
+    name="despacho_rolda.report_despacho_consolidated_document"
+    file="despacho_rolda.report_despacho_consolidated_document"
+    paperformat="paperformat_despacho_rolda"
+  />
+  <report
+    id="report_guide_customer"
+    model="wz.despacho.print.guide"
+    string="Por cliente"
+    report_type="qweb-pdf"
+    name="despacho_rolda.report_despacho_customer_document"
+    file="despacho_rolda.report_despacho_customer_document"
+    paperformat="paperformat_despacho_rolda"
+    print_report_name="'Despacho: %s' % (object.partner_id.name)"
+  />
+  <report
+    id="report_guide_transport"
+    model="wz.despacho.print.guide"
+    string="Por transporte"
+    report_type="qweb-pdf"
+    name="despacho_rolda.report_despacho_transport_document"
+    file="despacho_rolda.report_despacho_transport_document"
+    paperformat="paperformat_despacho_transport_rolda"
+    print_report_name="'Despacho: %s' % (object.despacho_id.transport_company_id.name)"
+  />
+  <report
+    id="report_guide_farmatodo"
+    model="wz.despacho.print.guide"
+    string="Farmatodo"
+    report_type="qweb-pdf"
+    name="despacho_rolda.report_despacho_farmatodo_document"
+    file="despacho_rolda.report_despacho_farmatodo_document"
+    paperformat="paperformat_despacho_rolda"
+  />
+</odoo>

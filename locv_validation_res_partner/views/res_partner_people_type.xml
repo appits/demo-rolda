@@ -13,9 +13,9 @@
                 <xpath expr="//field[@name='street']" position="attributes">
                        <attribute name="attrs">{'required': [('value_parent','=', False)]}</attribute>
                 </xpath>
-                <xpath expr="//field[@name='street2']" position="attributes">
+                <!--xpath expr="//field[@name='street2']" position="attributes">
                       <attribute name="attrs">{'required': [('value_parent','=', False)]}</attribute>
-                </xpath>
+                </xpath-->
                 <xpath expr="//field[@name='city']" position="attributes">
                      <attribute name="attrs">{'required': [('company_type','=','company')]}</attribute>
                 </xpath>
