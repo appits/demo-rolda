@@ -21,3 +21,8 @@
 	path = festovalros/l10n_ve_dpt
 	url = git@github.com:festovalros/l10n_ve_dpt.git
 	branch = 13.0
+
+[submodule "festovalros/theme_clarico_vega"]
+	path = festovalros/theme_clarico_vega
+	url = git@github.com:festovalros/theme_clarico_vega.git
+	branch = main
