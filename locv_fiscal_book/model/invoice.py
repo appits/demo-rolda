@@ -30,7 +30,7 @@ class AccountMove(models.Model):
 
     fb_id = fields.Many2one('fiscal.book', 'Fiscal Book',
                             help='Libro fiscal donde esta línea está relacionada con')
-    issue_fb_id = fields.Many2one('fiscal.book', 'Fiscal Book',
+    issue_fb_id = fields.Many2one('fiscal.book', 'Fiscal Book issue',
                                        help='Libro fiscal donde se debe agregar esta factura')
 
 

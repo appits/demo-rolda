@@ -2,7 +2,6 @@
 ###########################################################################
 
 import time
-from odoo.addons import decimal_precision as dp
 from odoo import models, fields, api, exceptions, _
 import logging
 _logger = logging.getLogger(__name__)
@@ -523,11 +522,11 @@ class AccountTax(models.Model):
 
     amount_ret = fields.Float(
         string='Importe de retención',
-        digits=dp.get_precision(' Withhold'),
+        digits='Withhold',
         help="Importe de retención de IVA")
     base_ret = fields.Float(
-        string='Amount',
-        digits=dp.get_precision('Withhold'),
+        string='Monto base Retención',
+        digits='Withhold',
         help="Cantidad sin impuestos")
 
 

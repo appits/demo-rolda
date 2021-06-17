@@ -231,6 +231,7 @@ class RetentionISLR(models.Model):
 
 class ReportRetentionISLR(models.AbstractModel):
     _name = 'report.locv_retention_islr.report_retention_islr1'
+    _description = 'witholding islr report'
 
     @api.model
     def _get_report_values(self, docids, data=None):

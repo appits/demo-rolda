@@ -163,7 +163,7 @@
                     <group colspan="4" col="6">
                         <field name="partner_id" domain="[('wh_iva_agent','=',True), ('supplier_rank','>', 0), ('parent_id','=',False)]"
                                string="Empresa" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}" options="{'no_open': True}"/>
-                        <field name="journal_id"  string="Diario" required="1" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}" options="{'no_open': True, 'no_quick_create': True, 'no_create_edit' : True}"/>
+                        <field name="journal_id"  string="Diario" domain="[('is_withholdable','=',True)]" required="1" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}" options="{'no_open': True, 'no_quick_create': True, 'no_create_edit' : True}"/>
                         <field name="type" string="Tipo"/>
                         <field name="third_party_id" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"/>
                         <field name="currency_id" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}" options="{'no_open': True}"/>

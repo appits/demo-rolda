@@ -15,8 +15,8 @@ class AccountInvoice(models.Model):
     sum_amount_available = fields.Monetary('Anticipo Disponible', currency_field='currency_company')
     currency_id = fields.Many2one('res.currency', string='Currency')
     sum_amount_available_dolares = fields.Monetary('Monto moneda extranjera', currency_field='foreign_currency')
-    currency_company = fields.Many2one('res.currency', string='Currency')
-    foreign_currency = fields.Many2one('res.currency', string='Currency')
+    currency_company = fields.Many2one('res.currency', string='Moneda de la compañia')
+    foreign_currency = fields.Many2one('res.currency', string='Foreign Currency')
     anticipo_check = fields.Boolean('Ya esta atado a un anticipo')
 
     @api.onchange('partner_id')

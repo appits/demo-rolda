@@ -8,7 +8,7 @@ access_locv_withholding_islr_islr_xml_wh_line,locv_withholding_islr.islr.xml.wh.
 access_locv_withholding_islr_islr_rates,locv_withholding_islr.islr.rates,model_islr_rates,locv_grupo_localizacion.group_localizacion,1,1,1,1
 access_locv_withholding_islr_islr_wh_doc,locv_withholding_islr.islr.wh.doc,model_islr_wh_doc,locv_grupo_localizacion.group_localizacion,1,1,1,1
 access_locv_withholding_islr_employee_income_wh,locv_withholding_islr.employee.income.wh,model_employee_income_wh,locv_grupo_localizacion.group_localizacion,1,1,1,1
-access_locv_withholding_islr_partner_income_wh_print,locv_withholding_islr.partner.income.wh.print,model_partner_income_wh_print,locv_grupo_localizacion.group_localizacion,1,1,1,1
+
 
 
 

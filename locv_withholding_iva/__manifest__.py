@@ -23,6 +23,7 @@ Colaborador: Maria Carreño
         'view/partner_view.xml',
         'view/res_company_view.xml',
         'view/wh_iva_view.xml',
+        'view/account_journal_view.xml',
         'report/withholding_vat_report.xml',
     ],
     'installable': True,

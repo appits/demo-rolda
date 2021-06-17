@@ -10,6 +10,7 @@ from odoo.exceptions import UserError, Warning, ValidationError
 
 class IvaReport(models.AbstractModel):
     _name = 'report.locv_withholding_iva.template_wh_vat'
+    _description = 'IVA withholding report template'
     #_name = 'report.locv_withholding_iva.template_wh_vat'
 
     #_inherit = 'report.abstract_report'
@@ -205,8 +206,9 @@ class IvaReport(models.AbstractModel):
         direction = ((partner.street and partner.street + ', ') or '') +\
                     ((partner.street2 and partner.street2 + ', ') or '') +\
                     ((partner.city and partner.city + ', ') or '') +\
-                    ((partner.state_id.name and partner.state_id.name + ',')or '')+ \
-                    ((partner.country_id.name and partner.country_id.name + '') or '')
+                    ((partner.state_id.name and partner.state_id.name + ', ') or '') +\
+                    ((partner.country_id.name and partner.country_id.name + ', ') or '') +\
+                    ((partner.zip and partner.zip + '') or '')
         #if direction == '':
         #    raise ValidationError ("Debe ingresar los datos de direccion en el proveedor")
             #direction = 'Sin direccion'

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+
+        <record id="wh_iva_journal" model="ir.ui.view">
+            <field name="name">account.journal.wh.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="is_withholdable"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

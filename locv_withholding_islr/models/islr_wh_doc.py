@@ -6,7 +6,6 @@ from odoo import api
 from odoo import fields, models
 from odoo import exceptions
 from odoo.tools.translate import _
-from odoo.addons import decimal_precision as dp
 
 
 class IslrWhDoc(models.Model):
@@ -180,7 +179,7 @@ class IslrWhDoc(models.Model):
             states={'draft': [('readonly', False)]},
             help="Cuenta por cobrar o cuenta por pagar de socio")
     partner_id = fields.Many2one(
-            'res.partner', 'Compañia', readonly=True, required=True,
+            'res.partner', 'Compañia Objeto de Retención', readonly=True, required=True,
             states={'draft': [('readonly', False)]},
             help="Socio objeto de retención")
     currency_id = fields.Many2one(
@@ -199,7 +198,7 @@ class IslrWhDoc(models.Model):
             help="Compañia")
     amount_total_ret = fields.Float(
             compute='_get_amount_total', store=True, string='Monto total',
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Importe total retenido")
     concept_ids = fields.One2many(
             'islr.wh.doc.line', 'islr_wh_doc_id', 'Concepto de retención de ingresos',
@@ -440,7 +439,7 @@ class IslrWhDoc(models.Model):
 
         return True
 
-    @api.onchange('partner_id','inv_type')
+    @api.onchange('partner_id')
     def onchange_partner_id(self):
         """ Unlink all taxes when change the partner in the document.
         @param type: invoice type
@@ -719,8 +718,8 @@ class IslrWhDoc(models.Model):
                 name = 'COMP. RET. ISLR ' + ret.name + \
                     ' Doc. ' + (line.invoice_id.supplier_invoice_number or '')
             else:
-                name = 'COMP. RET. ISLR ' + ret.number + \
-                    ' Doc. ' + (line.invoice_id.display_name or '')
+                name = 'COMP. RET. ISLR ' + ret.name + \
+                    ' Doc. ' + (line.invoice_id.name or '')
             writeoff_account_id = False
             writeoff_journal_id = False
             #amount = line.amount_islr_ret
@@ -1533,8 +1532,9 @@ class IslrWhDocInvoices(models.Model):
 
                 [('partner_id', '=', inv_brw.partner_id.id),
                  ('concept_id', '=', concept_id),
-                 ('fiscalyear_id', '=',
-                  inv_brw.islr_wh_doc_id.fiscalyear_id.id)])
+                 #('fiscalyear_id', '=',
+                  #inv_brw.islr_wh_doc_id.fiscalyear_id.id)
+                  ])
             for iwhd_brw in iwhd_obj.browse( iwhd_ids):
                 base_ut += iwhd_brw.raw_base_ut
                 rate2['cumulative_base_ut'] += iwhd_brw.raw_base_ut
@@ -1692,20 +1692,20 @@ class IslrWhDocLine(models.Model):
             string='Moneda retenida Monto retenido', multi='all',
             help="Monto retenido del monto base")
     base_amount= fields.Float(
-            'Cantidad base', digits=dp.get_precision('Withhold ISLR'),
+            'Cantidad base', digits='Withhold ISLR',
             help="Cantidad base")
     currency_base_amount= fields.Float(compute='_amount_all', method=True, digits=(16, 2),
             string='Monto base en moneda extranjera', multi='all',
             help="Monto retenido del monto base")
     raw_base_ut= fields.Float(
-            'Cantidad de UT', digits=dp.get_precision('Withhold ISLR'),
+            'Cantidad de UT', digits='Withhold ISLR',
             help="Cantidad de UT")
     raw_tax_ut= fields.Float(
             'Impuesto retenido de UT',
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Impuesto retenido de UT")
     subtract = fields.Float(
-            'Sustraer', digits=dp.get_precision('Withhold ISLR'),
+            'Sustraer', digits='Withhold ISLR',
             help="Sustraer")
     islr_wh_doc_id = fields.Many2one(
             'islr.wh.doc', 'Retener documento', ondelete='cascade',
@@ -1715,11 +1715,11 @@ class IslrWhDocLine(models.Model):
             help="Concepto de retención asociado a esta tasa")
     retencion_islr = fields.Float(
             'Tasa de retención',
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Tasa de retención")
-    retention_rate = fields.Float(compute=_retention_rate, method=True, string='Tasa de retención',
+    retention_rate = fields.Float(compute=_retention_rate, method=True, string='Tasa de retención calculada',
              help="Withhold rate has been applied to the invoice",
-             digits=dp.get_precision('Withhold ISLR'))
+             digits='Withhold ISLR')
     xml_ids = fields.One2many(
             'islr.xml.wh.line', 'islr_wh_doc_line_id', 'XML Lines',
             help='ID de línea de factura de retención XML')
@@ -1727,7 +1727,7 @@ class IslrWhDocLine(models.Model):
             'islr.wh.doc.invoices', 'Factura retenida', ondelete='cascade',
             help="Facturas retenidas")
     partner_id = fields.Many2one('res.partner', related='islr_wh_doc_id.partner_id', string='Partner', store=True)
-    fiscalyear_id = fields.Many2one( 'account.fiscalyear', string='Fiscalyear',store=True)
+    #fiscalyear_id = fields.Many2one( 'account.fiscalyear', string='Fiscalyear',store=True)
 
 
 class IslrWhHistoricalData(models.Model):
@@ -1738,18 +1738,20 @@ class IslrWhHistoricalData(models.Model):
     partner_id = fields.Many2one(
             'res.partner', 'Partner', readonly=False, required=True,
             help="Partner for this historical data")
+    '''
     fiscalyear_id = fields.Many2one(
             'account.fiscalyear', 'Fiscal Year', readonly=False, required=True,
             help="Fiscal Year to applicable to this cumulation")
+    '''
     concept_id = fields.Many2one(
             'islr.wh.concept', 'Entrada de diario', required=True,
             help="Concepto de retención asociado a estos datos históricos")
     raw_base_ut = fields.Float(
             'Cantidad acumulada de UT', required=True,
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Cantidad de UT")
     raw_tax_ut = fields.Float(
             'Impuesto retenido de UT acumulado', required=True,
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Impuesto retenido de UT")
 

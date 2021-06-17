@@ -1,7 +1,6 @@
 # coding: utf-8
 ##############################################################################
 from odoo import fields, models, api
-from odoo.addons import decimal_precision as dp
 
 
 class IslrRates(models.Model):
@@ -40,20 +39,20 @@ class IslrRates(models.Model):
     base = fields.Float(
             'Sin importe de impuestos', required=True,
             help="Porcentaje de la cantidad sobre la cual aplicar la retención",
-            digits=dp.get_precision('Withhold ISLR'))
+            digits='Withhold ISLR')
     minimum= fields.Float(
             'Min. Cantidad', required=True,
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Cantidad mínima, a partir de la cual determinará si esta"
                  "retenido")
     wh_perc= fields.Float(
             'Porcentaje de la Cantidad', required=True,
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="El porcentaje que se aplica a los ingresos imponibles sujetos a impuestos arroja la"
                  "cantidad a retener")
     subtract= fields.Float(
             'Sustracción en unidades impositivas', required=True,
-            digits=dp.get_precision('Withhold ISLR'),
+            digits='Withhold ISLR',
             help="Cantidad a restar de la cantidad total a retener "
                  "Cantidad Porcentaje de retención ..... Este sustraendo solamente"
                  "aplicado la primera vez que realiza una retención")

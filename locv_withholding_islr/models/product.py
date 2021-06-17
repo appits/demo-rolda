@@ -21,7 +21,7 @@ class ProductProduct(models.Model):
 
     _inherit = "product.product"
 
-    @api.onchange('product_type', 'prd_type')
+    @api.onchange('type')
     def onchange_product_type(self):
         """ Add a default concept for products that are not service type,
         Returns false if the product type is not a service, and if the
@@ -30,7 +30,7 @@ class ProductProduct(models.Model):
         @param prd_type: product type new
         """
         concept_id = False
-        if self.prd_type != 'service':
+        if self.type != 'service':
             concept_obj = self.env['islr.wh.concept']
 
             concept_id = concept_obj.search([('withholdable', '=', False)])
