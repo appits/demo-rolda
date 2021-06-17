@@ -1,4 +1,5 @@
 
+
 [submodule "OCA/product-pack"]
 	path = OCA/product-pack
 	url = git@github.com:OCA/product-pack.git
@@ -18,3 +19,4 @@
 	path = festovalros/theme_clarico_vega
 	url = git@github.com:festovalros/theme_clarico_vega.git
 	branch = main
+
