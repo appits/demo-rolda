@@ -175,6 +175,10 @@
         </div>
         <div class="footer footer-rolda">
           <div class="clearfix text-left">
+            <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Monto Equivalente para fines fiscales en la Republica Bolivariana de Venezuela: Base Impositiva
+            <span t-field="o.amount_untaxed_currency" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>. Monto I.V.A <span t-field="o.amount_by_group_currency" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>.
+            Total Factura <span t-field="o.amount_total_currency" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>. Tipo de cambio Bs. <span t-field="o.company_currency_id.rate"/> 
+            con fecha valor <span t-field="o.invoice_date"/> indicado por el BCV.</p>
             <p class="bg-light">Son <span class="text-uppercase" t-esc="o.currency_id.amount_to_text(o.amount_total)"/></p>
           </div>
         </div>
