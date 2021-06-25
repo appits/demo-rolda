@@ -11,6 +11,7 @@
         'data/company_data.xml',
         'data/sequence_data.xml',
         'views/assets.xml',
+        'views/invoice_view.xml',
         'views/res_partner_views.xml',
         'views/export_bank_payments_views.xml',
         'views/product_pack_view.xml',
