@@ -23,7 +23,8 @@
                 <span t-if="o.type == 'out_refund'">Nota de Crédito</span>
                 <span t-if="o.type == 'in_refund'">Factura rectificativa de proveedor</span>
                 <span t-if="o.type == 'in_invoice'">Factura de proveedor</span>
-                <span t-if="o.name != '/'" t-field="o.name"/>
+                <span t-if="o.name != '/' and o.type != 'in_invoice'" t-field="o.name"/>
+                <span t-if="o.type == 'in_invoice'" t-field="o.supplier_invoice_number"/>
               </h5>
               <table class="table table-sm table-borderless">
                 <tr>
