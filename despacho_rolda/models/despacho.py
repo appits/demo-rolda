@@ -17,7 +17,7 @@ class Despacho(models.Model):
     vat_assistant = fields.Char(related='assistant_id.identification_id', string='CI asistente')
     seal = fields.Char('Precinto', help='Número de precinto relativo a la orden de despacho a realizar.')
     notes = fields.Text('Observaciones')
-    line_ids = fields.Many2many('account.move', 'move_despacho_rel', 'despacho_id', 'move_id', 'Facturas')
+    order_ids = fields.Many2many('sale.order', 'order_despacho_rel', 'despacho_id', 'order_id', 'Pedidos de venta')
     user_id = fields.Many2one('res.users', 'Responsable', default=lambda self: self.env.user)
     active = fields.Boolean('Activo', default=True)
 

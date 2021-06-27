@@ -1,7 +1,7 @@
 {
     'name': 'Despacho Rolda',
     'version': '13.0.0.0.1',
-    'depends': ['rolda', 'stock', 'account'],
+    'depends': ['rolda', 'stock', 'account', 'sale_management'],
     'author': 'Keiver Peña',
     'license': 'AGPL-3',
     'website': 'https://gitlab.com/keiverobles',
@@ -12,7 +12,7 @@
         'wizard/print_guide_views.xml',
         'views/assets.xml',
         'views/despacho_views.xml',
-        'views/account_move_views.xml',
+        'views/sale_order_views.xml',
         'views/res_partner_views.xml',
         'report/report_guide_consolidated_templates.xml',
         'report/report_guide_customer_templates.xml',
