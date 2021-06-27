@@ -25,6 +25,9 @@
       <form string="Despacho">
         <header>
           <button name="%(action_despacho_print_guide)s" string="Imprimir Guía" type="action" class="btn-primary oe_read_only"/>
+          <button name="action_done" string="Validar" type="object" class="btn-primary" states="draft"/>
+          <button name="action_draft" string="Convertir a borrador" type="object" states="done"/>
+          <field name="state" widget="statusbar"/>
         </header>
         <sheet>
           <div class="oe_title">
@@ -85,6 +88,7 @@
     <field name="arch" type="xml">
       <search string="Filter Despacho">
         <field name="name"/>
+        <filter string="Estado" name="groupby_state" context="{'group_by': 'state'}"/>
       </search>
     </field>
   </record>
