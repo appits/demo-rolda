@@ -6,6 +6,10 @@ class Despacho(models.Model):
     _name = 'despacho.despacho'
     _description = 'Despacho'
 
+    state = fields.Selection([
+        ('draft', 'Borrador'),
+        ('done', 'Validado')
+    ], string='Estado', required=True, default='draft', copy=False)
     name = fields.Char('Nombre', default='Nuevo', readonly=True)
     date = fields.Datetime('Fecha', default=fields.Datetime.now, help='Fecha en la cual se está realizando el registro de la orden de despacho.')
     # partner_id = fields.Many2one('res.partner', 'Cliente')
@@ -17,7 +21,7 @@ class Despacho(models.Model):
     vat_assistant = fields.Char(related='assistant_id.identification_id', string='CI asistente')
     seal = fields.Char('Precinto', help='Número de precinto relativo a la orden de despacho a realizar.')
     notes = fields.Text('Observaciones')
-    line_ids = fields.Many2many('account.move', 'move_despacho_rel', 'despacho_id', 'move_id', 'Facturas')
+    order_ids = fields.Many2many('sale.order', 'order_despacho_rel', 'despacho_id', 'order_id', 'Pedidos de venta')
     user_id = fields.Many2one('res.users', 'Responsable', default=lambda self: self.env.user)
     active = fields.Boolean('Activo', default=True)
 
@@ -26,3 +30,9 @@ class Despacho(models.Model):
         new_id = super().create(vals)
         new_id.name = self.env['ir.sequence'].next_by_code('despacho.rolda')
         return new_id
+
+    def action_done(self):
+        return self.write({'state': 'done'})
+
+    def action_draft(self):
+        return self.write({'state': 'draft'})

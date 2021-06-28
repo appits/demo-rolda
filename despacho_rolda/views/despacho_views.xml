@@ -11,7 +11,7 @@
         <field name="license_plate"/>
         <field name="driver_id"/>
         <!-- <field name="partner_id"/> -->
-        <!-- <field name="line_ids"/> -->
+        <!-- <field name="order_ids"/> -->
         <!-- <field name="origin"/> -->
         <!-- <field name="city"/> -->
         <field name="seal"/>
@@ -25,6 +25,9 @@
       <form string="Despacho">
         <header>
           <button name="%(action_despacho_print_guide)s" string="Imprimir Guía" type="action" class="btn-primary oe_read_only"/>
+          <button name="action_done" string="Validar" type="object" class="btn-primary" states="draft"/>
+          <button name="action_draft" string="Convertir a borrador" type="object" states="done"/>
+          <field name="state" widget="statusbar"/>
         </header>
         <sheet>
           <div class="oe_title">
@@ -57,17 +60,17 @@
           </group>
           <notebook>
             <page string="Detalle" name="page_detail">
-              <field name="line_ids" nolabel="1" domain="[('type', 'in', ['out_invoice', 'out_refund'])]">
+              <field name="order_ids" nolabel="1" options="{'no_create': True}">
                 <tree>
                   <field name="partner_id"/>
                   <field name="name"/>
-                  <field name="invoice_origin"/>
                   <field name="partner_city"/>
-                  <field name="total_qty"/>
-                  <field name="total_weight"/>
-                  <field name="date" optional="hide"/>
-                  <field name="ref" optional="hide"/>
-                  <field name="journal_id" optional="hide"/>
+                  <field name="total_qty" optional="hide"/>
+                  <field name="total_weight" sum="Total"/>
+                  <field name="date_order" optional="hide"/>
+                  <field name="client_order_ref" optional="hide"/>
+                  <field name="create_date" optional="hide"/>
+                  <field name="commitment_date" optional="hide"/>
                   <field name="company_id" groups="base.group_multi_company" optional="show"/>
                   <field name="state" optional="hide"/>
                   <field name="currency_id" invisible="1"/>
@@ -85,6 +88,7 @@
     <field name="arch" type="xml">
       <search string="Filter Despacho">
         <field name="name"/>
+        <filter string="Estado" name="groupby_state" context="{'group_by': 'state'}"/>
       </search>
     </field>
   </record>

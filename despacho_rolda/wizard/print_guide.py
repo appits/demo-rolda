@@ -14,13 +14,13 @@ class WzDespachoPrintGuide(models.TransientModel):
         res_model = self._context.get('active_model')
         res_id = self._context.get('active_id')
         despacho = self.env[res_model].browse(res_id)
-        return despacho.line_ids.mapped('partner_id.id')
+        return despacho.order_ids.mapped('partner_id.id')
 
     option = fields.Selection([
         ('consolidated', 'Consolidado'),
-        ('by_customer', 'Por Cliente'),
-        ('by_transport', 'Por Transporte'),
-        ('farmatodo', 'Farmatodo'),
+        # ('by_customer', 'Por Cliente'),
+        ('detailed', 'Detallado'),
+        # ('farmatodo', 'Farmatodo'),
     ], string='Opción', default='consolidated', required=True)
     partner_id = fields.Many2one('res.partner', 'Cliente')
     despacho_id = fields.Many2one('despacho.despacho', 'Despacho', default=_default_despacho)
@@ -54,7 +54,7 @@ class WzDespachoPrintGuide(models.TransientModel):
             'seal': despacho.seal,
             'lines': [],
         }
-        for line in despacho.line_ids:
+        for line in despacho.order_ids:
             vals['lines'].append({
                 'name': line.name,
                 'partner_name': line.partner_id.name,
@@ -77,16 +77,16 @@ class WzDespachoPrintGuide(models.TransientModel):
             'lines': [],
         }
         if self.partner_id:
-            invoices = despacho.line_ids.filtered(lambda x: x.partner_id == self.partner_id)
+            invoices = despacho.order_ids.filtered(lambda x: x.partner_id == self.partner_id)
         else:
-            invoices = despacho.line_ids
+            invoices = despacho.order_ids
         vals['inv_amount_total'] = sum(invoices.mapped('amount_total'))
-        for line in invoices.invoice_line_ids:
+        for line in invoices.order_line:
             vals['lines'].append({
                 'barcode': line.product_id.barcode,
                 'name': line.name,
-                'package': line.product_id.weight * line.quantity,
-                'quantity': line.quantity,
+                'package': line.product_id.weight * line.product_uom_qty,
+                'quantity': line.product_uom_qty,
                 'price_unit': line.price_unit,
                 'discount': line.discount,
                 'price_subtotal': line.price_subtotal,
@@ -95,7 +95,7 @@ class WzDespachoPrintGuide(models.TransientModel):
         datas['despacho'] = vals
         return self.env.ref('despacho_rolda.report_guide_customer').report_action([], data=datas)
 
-    def _report_by_transport(self, despacho):
+    def _report_detailed(self, despacho):
         vals = {
             'name': despacho.name,
             'transport_name': despacho.transport_company_id.name,
@@ -108,21 +108,21 @@ class WzDespachoPrintGuide(models.TransientModel):
             'seal': despacho.seal,
             'lines': [],
         }
-        invoices = despacho.line_ids
+        invoices = despacho.order_ids
         vals['inv_amount_total'] = sum(invoices.mapped('amount_total'))
         vals['total_weight'] = sum(invoices.mapped('total_weight'))
-        for line in invoices.invoice_line_ids:
+        for line in invoices.order_line:
             vals['lines'].append({
                 'barcode': line.product_id.barcode,
                 'name': line.name,
-                'package': line.product_id.weight * line.quantity,
-                'quantity': line.quantity,
-                'uom_name': line.product_uom_id.name,
+                'package': line.product_id.weight * line.product_uom_qty,
+                'quantity': line.product_uom_qty,
+                'uom_name': line.product_uom.name,
                 # 'price_subtotal': line.price_subtotal,
             })
         datas = self._get_report_data()
         datas['despacho'] = vals
-        return self.env.ref('despacho_rolda.report_guide_transport').report_action([], data=datas)
+        return self.env.ref('despacho_rolda.report_guide_detailed').report_action([], data=datas)
 
     def _report_farmatodo(self, despacho):
         vals = {
@@ -138,7 +138,7 @@ class WzDespachoPrintGuide(models.TransientModel):
             'lines': [],
         }
         if self.partner_id:
-            invoices = despacho.line_ids.filtered(lambda x: x.partner_id == self.partner_id)
+            invoices = despacho.order_ids.filtered(lambda x: x.partner_id == self.partner_id)
         else:
             raise UserError('Debes seleccionar un Cliente con nombre Farmatodo.')
         vals['inv_amount_total'] = sum(invoices.mapped('amount_total'))
