@@ -23,7 +23,8 @@
                 <span t-if="o.type == 'out_refund'">Nota de Crédito</span>
                 <span t-if="o.type == 'in_refund'">Factura rectificativa de proveedor</span>
                 <span t-if="o.type == 'in_invoice'">Factura de proveedor</span>
-                <span t-if="o.name != '/'" t-field="o.name"/>
+                <span t-if="o.name != '/' and o.type != 'in_invoice'" t-field="o.name"/>
+                <span t-if="o.type == 'in_invoice'" t-field="o.supplier_invoice_number"/>
               </h5>
               <table class="table table-sm table-borderless">
                 <tr>
@@ -54,6 +55,7 @@
                 <th name="th_code" class="text-left"><span>Código</span></th>
                 <th name="th_description" class="text-left"><span>Descripción</span></th>
                 <th name="th_quantity" class="text-right"><span>Cantidad</span></th>
+                <th name="th_uom" class="text-right"><span>Unidad</span></th>
                 <th name="th_priceunit" t-attf-class="text-right text-nowrap {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Precio Unitario</span></th>
                 <th name="th_price_unit" t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                   <span>Desc.%</span>
@@ -78,8 +80,8 @@
                     <td name="account_invoice_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
                     <td class="text-right">
                       <span t-field="line.quantity"/>
-                      <![CDATA[&nbsp;]]>
-                      <![CDATA[&nbsp;]]>
+                    </td>
+                    <td class="text-right">
                       <span t-field="line.product_uom_id" groups="uom.group_uom"/>
                     </td>
                     <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
@@ -173,6 +175,12 @@
         </div>
         <div class="footer footer-rolda">
           <div class="clearfix text-left">
+            <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Los valores expresados en Dólares a esta fecha calculados a la tasa oficial de
+            Bs. <span t-field="o.company_currency_id.rate"/> vigente para la fecha de su emisión, de conformidad alo establecido en el numeral 14 del articulo 13
+            de la providencia Administrativa Nº 0071 enamada del servicio Nacional Integrado de Administracion Aduanera y Tributaria (SENIAT), Vigente y publicada
+            en la Gaceta Oficial Nº 39.795 del 8 de Noviembre del 2.011. En caso de cancelas su equivalente en Bs. deberá realizarlo según la tasa B.C.V vigente del
+            día del pago.
+            </p>
             <p class="bg-light">Son <span class="text-uppercase" t-esc="o.currency_id.amount_to_text(o.amount_total)"/></p>
           </div>
         </div>
