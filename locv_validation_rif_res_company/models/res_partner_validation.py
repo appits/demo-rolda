@@ -17,11 +17,13 @@ class RespartnerRif(models.Model):
             if not res:
                 raise exceptions.except_orm(('Advertencia!'), (
                     'El rif tiene el formato incorrecto. Ej: V-012345678, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo'))
+            '''
             if not self.validate_rif_duplicate(vals.get('vat', False)):
                 raise exceptions.except_orm(('Advertencia!'),
                                             (
                                                 u'El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo') % (
                                                 vals.get('vat', False)))
+            '''
         if vals.get('email'):
             res = self.validate_email_addrs(vals.get('email'), 'email')
             if not res:
@@ -40,11 +42,13 @@ class RespartnerRif(models.Model):
             if not res:
                 raise exceptions.except_orm(('Advertencia!'), (
                     'El rif tiene el formato incorrecto. Ej: V-012345678, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo'))
+            '''
             if not self.validate_rif_duplicate(vals.get('vat', False), True):
                 raise exceptions.except_orm(('Advertencia!'),
                                             (
                                                 u'El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo') % (
                                                 vals.get('vat', False)))
+            '''
         if vals.get('email'):
             res = self.validate_email_addrs(vals.get('email'), 'email')
             if not res:
@@ -67,7 +71,7 @@ class RespartnerRif(models.Model):
                 res ={}
         return res
 
-
+    '''
     def validate_rif_duplicate(self, valor, create=False):
             found = True
             partner = self.search([('vat', '=', valor)])
@@ -79,7 +83,7 @@ class RespartnerRif(models.Model):
                     elif partner_ids and (partner_ids.customer_rank or partner_ids.supplier_rank):
                             found = False
             return found
-
+    '''
     def validate_email_addrs(self, email, field):
         res = {}
 
