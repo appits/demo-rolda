@@ -175,10 +175,12 @@
         </div>
         <div class="footer footer-rolda">
           <div class="clearfix text-left">
-            <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Monto Equivalente para fines fiscales en la Republica Bolivariana de Venezuela: Base Impositiva
-            <span t-field="o.amount_untaxed_currency" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>. Monto I.V.A <span t-field="o.amount_by_group_currency" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>.
-            Total Factura <span t-field="o.amount_total_currency" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>. Tipo de cambio Bs. <span t-field="o.company_currency_id.rate"/> 
-            con fecha valor <span t-field="o.invoice_date"/> indicado por el BCV.</p>
+            <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Los valores expresados en Dólares a esta fecha calculados a la tasa oficial de
+            Bs. <span t-field="o.company_currency_id.rate"/> vigente para la fecha de su emisión, de conformidad alo establecido en el numeral 14 del articulo 13
+            de la providencia Administrativa Nº 0071 enamada del servicio Nacional Integrado de Administracion Aduanera y Tributaria (SENIAT), Vigente y publicada
+            en la Gaceta Oficial Nº 39.795 del 8 de Noviembre del 2.011. En caso de cancelas su equivalente en Bs. deberá realizarlo según la tasa B.C.V vigente del
+            día del pago.
+            </p>
             <p class="bg-light">Son <span class="text-uppercase" t-esc="o.currency_id.amount_to_text(o.amount_total)"/></p>
           </div>
         </div>
