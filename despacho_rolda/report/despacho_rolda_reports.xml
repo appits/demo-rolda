@@ -48,18 +48,17 @@
   />
   <report
     id="report_guide_customer"
-    model="wz.despacho.print.guide"
-    string="Por cliente"
+    model="stock.picking"
+    string="Nota de despacho"
     report_type="qweb-pdf"
     name="despacho_rolda.report_despacho_customer_document"
     file="despacho_rolda.report_despacho_customer_document"
     paperformat="paperformat_despacho_rolda"
-    print_report_name="'Despacho: %s' % (object.partner_id.name)"
   />
   <report
     id="report_guide_farmatodo"
-    model="wz.despacho.print.guide"
-    string="Farmatodo"
+    model="stock.picking"
+    string="Operaciones de albarán sin precio"
     report_type="qweb-pdf"
     name="despacho_rolda.report_despacho_farmatodo_document"
     file="despacho_rolda.report_despacho_farmatodo_document"

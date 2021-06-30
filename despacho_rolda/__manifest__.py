@@ -16,7 +16,7 @@
         'views/res_partner_views.xml',
         'report/report_guide_consolidated_templates.xml',
         'report/report_guide_detailed_templates.xml',
-        'report/report_guide_customer_templates.xml',
+        'report/report_nota_despacho_templates.xml',
         'report/report_guide_farmatodo_templates.xml',
         'report/report_templates.xml',
         'report/despacho_rolda_reports.xml',

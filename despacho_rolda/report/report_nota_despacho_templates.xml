@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="report_despacho_customer_document">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="despacho_rolda.despacho_layout_standard">
+          <t t-set="title" t-value="'NOTA DE DESPACHO'"/>
+          <t t-set="no_footer" t-value="True"/>
+          <t t-set="left_header">
+            <table>
+              <tr>
+                <td>Guía Nro.: </td>
+                <td class="pl-2"><span t-field="o.name"/></td>
+              </tr>
+              <tr>
+                <td>Pedido:</td>
+                <td class="pl-2"><span t-field="o.origin"/></td>
+              </tr>
+            </table>
+          </t>
+          <!-- <t t-set="seal" t-value="despacho['seal']"/> -->
+          <div class="oe_structure"/>
+          <div class="page">
+            <div class="table-bordered">
+              <table class="table table-borderless">
+                <tr>
+                  <td class="py-0"><strong>Cliente:</strong> <span t-field="o.partner_id"/></td>
+                  <td class="py-0"><strong>R.I.F.:</strong> <span t-field="o.partner_id.vat"/></td>
+                  <td class="py-0"><strong>Cuidad Destino:</strong> <span t-field="o.partner_id.city"/></td>
+                </tr>
+                <tr>
+                  <td class="py-0" colspan="3">Dirección de Entrega: </td>
+                </tr>
+                <tr>
+                  <td class="py-0"><strong>Condición de Pago:</strong> <span/></td>
+                  <td class="py-0"><strong>Fecha Emisión:</strong> <span t-field="o.create_date"/></td>
+                  <td class="py-0"><strong>Fecha Vencimiento:</strong> <span t-field="o.scheduled_date"/></td>
+                </tr>
+              </table>
+            </div>
+            <table class="table table-despacho-customer">
+              <thead>
+                <tr>
+                  <th class="border-top-0 text-left"><span>EAN</span></th>
+                  <th class="border-top-0 text-left"><span>Producto</span></th>
+                  <th class="border-top-0 text-center text-nowrap"><span>Bultos</span></th>
+                  <th class="border-top-0 text-right"><span>Unidades</span></th>
+                  <th class="border-top-0 text-right"><span>Precio</span></th>
+                  <th class="border-top-0 text-right text-nowrap"><span>% Desc.</span></th>
+                  <th class="border-top-0 text-right"><span>Neto $</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-set="total_package" t-value="0.0"/>
+                <t t-set="total_qty" t-value="0.0"/>
+                <t t-foreach="o.move_ids_without_package" t-as="line">
+                  <tr>
+                    <td class="border-top-0"><span t-field="line.product_id.barcode"/></td>
+                    <td class="border-top-0"><span t-field="line.product_id.name"/></td>
+                    <td class="border-top-0 text-center"><span t-esc="'{:,.2f}'.format(line.product_id.weight * line.product_uom_qty)"/></td>
+                    <td class="border-top-0 text-right"><span t-field="line.product_uom_qty"/></td>
+                    <td class="border-top-0 text-right"><span t-esc="line.product_id.lst_price"/></td>
+                    <td class="border-top-0 text-right"><span /></td>
+                    <td class="border-top-0 text-right"><span /></td>
+                  </tr>
+                  <t t-set="total_package" t-value="total_package + line.product_id.weight * line.product_uom_qty"/>
+                  <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
+                </t>
+              </tbody>
+            </table>
+            <div>
+              <div class="row">
+                <div class="col-7 text-justify">
+                  <p class="font-weight-bold">Con la recepción del presente formato el cliente declara conocer y aceptar los términos y condiciones establecidas en las políticas de comercialización de <span t-esc="env.company.name"/></p>
+                  <p class="font-weight-bold">Los montos reflejados en este documento son expresados en dólares americanos sin Iva, los cuáles podrán ser cancelados mediante transferencias bancarias a las cuentas indicadas por la empresa. En caso de cancelar el equivalente en bs. Deberá consultar la tasa vigente antes de realizar el pago a fin de confirmar el monto a cancelar.</p>
+                </div>
+                <div t-attf-class="#{'col-5' if report_type != 'html' else 'col-sm-7 col-md-6'}">
+                  <table class="table table-sm" style="page-break-inside: avoid;">
+                    <tr class="border-top-0">
+                      <td class="text-right"><strong>Total $:</strong></td>
+                      <td class="text-right">
+                        <span />
+                      </td>
+                    </tr>
+                    <tr class="border-top-0">
+                      <td class="text-right"><strong>Total Bultos:</strong></td>
+                      <td class="text-right">
+                        <span class="text-nowrap" t-esc="'{:,.2f}'.format(total_package)"/>
+                      </td>
+                    </tr>
+                    <tr class="border-top-0">
+                      <td class="text-right"><strong>Total Unidades:</strong></td>
+                      <td class="text-right">
+                        <span t-esc="'{:,.2f}'.format(total_qty)"/>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>
