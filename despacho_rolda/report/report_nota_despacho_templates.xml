@@ -55,9 +55,9 @@
                   <tr>
                     <td class="border-top-0"><span t-field="line.product_id.barcode"/></td>
                     <td class="border-top-0"><span t-field="line.product_id"/></td>
-                    <td class="border-top-0 text-center"><span t-field="line.product_uom_qty"/></td>
+                    <td class="border-top-0 text-center"><span t-field="line.product_uom_qty" t-options="{'widget': 'float', 'precision': 2}"/></td>
                     <td class="border-top-0 text-right"><span t-field="line.product_id.uom_id"/></td>
-                    <td class="border-top-0 text-right"><span t-esc="line.product_id.lst_price"/></td>
+                    <td class="border-top-0 text-right"><span t-esc="line.product_id.lst_price" t-options="{'widget': 'float', 'precision': 2}"/></td>
                   </tr>
                   <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
                   <t t-set="total_weight" t-value="total_weight + (line.product_id.weight * line.product_uom_qty)"/>
@@ -75,7 +75,7 @@
                     <tr class="border-top-0">
                       <td class="text-right"><strong>Total Cantidad:</strong></td>
                       <td class="text-right">
-                        <span t-esc="'{:,.2f}'.format(total_qty)"/>
+                        <span t-esc="total_qty" t-options="{'widget': 'float', 'precision': 2}"/>
                       </td>
                     </tr>
                   </table>
@@ -86,10 +86,8 @@
           <t t-set="top_footer">
             <table class="table table-rolda-footer">
               <tr>
-                <td>Precinto: <span /></td>
-                <td>Total Bultos: <span /></td>
-                <td>Total Cantidad: <span t-esc="'{:,.2f}'.format(total_qty)"/></td>
-                <td>Total Peso: <span t-esc="'{:,.2f}'.format(total_weight)"/></td>
+                <td>Total Cantidad: <span t-esc="total_qty" t-options="{'widget': 'float', 'precision': 2}"/></td>
+                <td>Total Peso: <span t-esc="total_weight" t-options="{'widget': 'float', 'precision': 2}"/></td>
               </tr>
             </table>
             <table class="table table-rolda-footer" style="page-break-inside: avoid; font-size: 80%;">
