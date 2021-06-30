@@ -175,10 +175,10 @@
         </div>
         <div class="footer footer-rolda">
           <div class="clearfix text-left">
-            <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Los valores expresados en Dólares a esta fecha calculados a la tasa oficial de
-            Bs. <span t-field="o.company_currency_id.rate"/> vigente para la fecha de su emisión, de conformidad alo establecido en el numeral 14 del articulo 13
-            de la providencia Administrativa Nº 0071 enamada del servicio Nacional Integrado de Administracion Aduanera y Tributaria (SENIAT), Vigente y publicada
-            en la Gaceta Oficial Nº 39.795 del 8 de Noviembre del 2.011. En caso de cancelas su equivalente en Bs. deberá realizarlo según la tasa B.C.V vigente del
+            <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Los valores expresados en Dólares estan calculados a la tasa oficial de
+            Bs. <span t-field="o.company_currency_id.rate"/> vigente para la fecha de su emisión, de conformidad a lo establecido en el numeral 14 del articulo 13
+            de la providencia Administrativa Nº 0071 emanada del servicio Nacional Integrado de Administracion Aduanera y Tributaria (SENIAT), Vigente y publicada
+            en la Gaceta Oficial Nº 39.795 del 8 de Noviembre del 2.011. En caso de cancelar su equivalente en Bs. deberá realizarlo según la tasa B.C.V vigente del
             día del pago.
             </p>
             <p class="bg-light">Son <span class="text-uppercase" t-esc="o.currency_id.amount_to_text(o.amount_total)"/></p>
