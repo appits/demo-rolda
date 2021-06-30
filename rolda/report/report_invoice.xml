@@ -173,7 +173,7 @@
             </div>
           </div>
         </div>
-        <div class="footer footer-rolda">
+        <div class="clearfix" style="font-size: 10px">
           <div class="clearfix text-left">
             <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Los valores expresados en Dólares estan calculados a la tasa oficial de
             Bs. <span t-field="o.company_currency_id.rate"/> vigente para la fecha de su emisión, de conformidad a lo establecido en el numeral 14 del articulo 13
