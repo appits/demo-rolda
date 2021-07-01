@@ -47,7 +47,7 @@
     paperformat="paperformat_despacho_transport_rolda"
   />
   <report
-    id="report_guide_customer"
+    id="report_guide_nota_despacho"
     model="stock.picking"
     string="Nota de despacho"
     report_type="qweb-pdf"
@@ -55,13 +55,13 @@
     file="despacho_rolda.report_nota_despacho_document"
     paperformat="paperformat_despacho_rolda"
   />
-  <report
-    id="report_guide_farmatodo"
+<!--   <report
+    id="report_guide_op_albaran"
     model="stock.picking"
     string="Operaciones de albarán sin precio"
     report_type="qweb-pdf"
     name="despacho_rolda.report_op_albaran_document"
     file="despacho_rolda.report_op_albaran_document"
     paperformat="paperformat_despacho_rolda"
-  />
+  /> -->
 </odoo>

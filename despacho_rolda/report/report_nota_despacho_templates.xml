@@ -5,7 +5,7 @@
       <t t-foreach="docs" t-as="o">
         <t t-call="despacho_rolda.despacho_layout_standard">
           <t t-set="title" t-value="'NOTA DE DESPACHO'"/>
-          <t t-set="no_footer" t-value="True"/>
+          <t t-set="no_footer" t-value="False"/>
           <t t-set="left_header">
             <table>
               <tr>
@@ -32,7 +32,7 @@
                   <td class="py-0" colspan="3">Dirección de Entrega: </td>
                 </tr>
                 <tr>
-                  <td class="py-0"><strong>Condición de Pago:</strong> <span/></td>
+                  <td class="py-0"><strong>Condición de Pago:</strong> <span t-field="o.env['sale.order'].search([('name', '=', o.origin)]).payment_term_id"/></td>
                   <td class="py-0"><strong>Fecha Emisión:</strong> <span t-field="o.create_date"/></td>
                   <td class="py-0"><strong>Fecha Vencimiento:</strong> <span t-field="o.scheduled_date"/></td>
                 </tr>
@@ -43,28 +43,24 @@
                 <tr>
                   <th class="border-top-0 text-left"><span>EAN</span></th>
                   <th class="border-top-0 text-left"><span>Producto</span></th>
-                  <th class="border-top-0 text-center text-nowrap"><span>Bultos</span></th>
+                  <th class="border-top-0 text-center text-nowrap"><span>Cantidad</span></th>
                   <th class="border-top-0 text-right"><span>Unidades</span></th>
                   <th class="border-top-0 text-right"><span>Precio</span></th>
-                  <th class="border-top-0 text-right text-nowrap"><span>% Desc.</span></th>
-                  <th class="border-top-0 text-right"><span>Neto $</span></th>
                 </tr>
               </thead>
               <tbody>
-                <t t-set="total_package" t-value="0.0"/>
                 <t t-set="total_qty" t-value="0.0"/>
+                <t t-set="total_weight" t-value="0.0"/>
                 <t t-foreach="o.move_ids_without_package" t-as="line">
                   <tr>
                     <td class="border-top-0"><span t-field="line.product_id.barcode"/></td>
-                    <td class="border-top-0"><span t-field="line.product_id.name"/></td>
-                    <td class="border-top-0 text-center"><span t-esc="'{:,.2f}'.format(line.product_id.weight * line.product_uom_qty)"/></td>
-                    <td class="border-top-0 text-right"><span t-field="line.product_uom_qty"/></td>
-                    <td class="border-top-0 text-right"><span t-esc="line.product_id.lst_price"/></td>
-                    <td class="border-top-0 text-right"><span /></td>
-                    <td class="border-top-0 text-right"><span /></td>
+                    <td class="border-top-0"><span t-field="line.product_id"/></td>
+                    <td class="border-top-0 text-center"><span t-field="line.product_uom_qty" t-options="{'widget': 'float', 'precision': 2}"/></td>
+                    <td class="border-top-0 text-right"><span t-field="line.product_id.uom_id"/></td>
+                    <td class="border-top-0 text-right"><span t-esc="line.product_id.lst_price" t-options="{'widget': 'float', 'precision': 2}"/></td>
                   </tr>
-                  <t t-set="total_package" t-value="total_package + line.product_id.weight * line.product_uom_qty"/>
                   <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
+                  <t t-set="total_weight" t-value="total_weight + (line.product_id.weight * line.product_uom_qty)"/>
                 </t>
               </tbody>
             </table>
@@ -77,21 +73,9 @@
                 <div t-attf-class="#{'col-5' if report_type != 'html' else 'col-sm-7 col-md-6'}">
                   <table class="table table-sm" style="page-break-inside: avoid;">
                     <tr class="border-top-0">
-                      <td class="text-right"><strong>Total $:</strong></td>
+                      <td class="text-right"><strong>Total Cantidad:</strong></td>
                       <td class="text-right">
-                        <span />
-                      </td>
-                    </tr>
-                    <tr class="border-top-0">
-                      <td class="text-right"><strong>Total Bultos:</strong></td>
-                      <td class="text-right">
-                        <span class="text-nowrap" t-esc="'{:,.2f}'.format(total_package)"/>
-                      </td>
-                    </tr>
-                    <tr class="border-top-0">
-                      <td class="text-right"><strong>Total Unidades:</strong></td>
-                      <td class="text-right">
-                        <span t-esc="'{:,.2f}'.format(total_qty)"/>
+                        <span t-esc="total_qty" t-options="{'widget': 'float', 'precision': 2}"/>
                       </td>
                     </tr>
                   </table>
@@ -99,6 +83,30 @@
               </div>
             </div>
           </div>
+          <t t-set="top_footer">
+            <table class="table table-rolda-footer">
+              <tr>
+                <td>Total Cantidad: <span t-esc="total_qty" t-options="{'widget': 'float', 'precision': 2}"/></td>
+                <td>Total Peso: <span t-esc="total_weight" t-options="{'widget': 'float', 'precision': 2}"/></td>
+              </tr>
+            </table>
+            <table class="table table-rolda-footer" style="page-break-inside: avoid; font-size: 80%;">
+              <tr>
+                <td class="pt-0 w-20">Aprobación transporte</td>
+                <td class="pt-0 w-20">Preparador</td>
+                <td class="pt-0 w-20">Chequeador</td>
+                <td class="pt-0 w-20">Conforme transportista</td>
+                <td class="pt-0 w-20">Retorno de facturas despachadas</td>
+              </tr>
+              <tr>
+                <td class="py-4"/>
+                <td class="py-4"/>
+                <td class="py-4"/>
+                <td class="py-4"/>
+                <td class="py-4"/>
+              </tr>
+            </table>
+          </t>
         </t>
       </t>
     </t>
