@@ -10,7 +10,7 @@
             <t t-set="tax_total_amount" t-value="0"/><!--total impuesto causado-->
             <t t-set="wh_tax_total_amount" t-value="0"/><!--total impuesto retenido-->
             <t t-foreach="data" t-as="d">
-                <t t-set="doc_total_amount" t-value="doc_total_amount+d.wh_lines.invoice_id.amount_total" />
+                <t t-set="doc_total_amount" t-value="doc_total_amount+d.wh_lines.invoice_id.amount_total_currency" />
                 <!--t t-set="exe_total_amount" t-value="exe_total_amount+d.wh_lines.invoice_id.amount_total" /--> <!--El campo no esta definido en la vista. Se debe revisar-->
                 <t t-set="tax_total_amount" t-value="tax_total_amount+d.wh_lines.wh_iva_rate" />
                 <t t-set="wh_tax_total_amount" t-value="wh_tax_total_amount+d.total_tax_ret" />

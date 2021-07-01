@@ -16,11 +16,11 @@
     </t>
     <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
       <div class="row">
-        <div class="col-4 mb4">
+        <div class="col-3 mb4">
           <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 85px;" alt="Logo"/>
           <div><t t-esc="company.country_id.vat_label or 'R.I.F.'"/>: <span t-field="company.vat"/></div>
         </div>
-        <div t-esc="title" class="h3 col-4 text-center font-weight-bold" style="margin-top:42px;"/>
+        <div t-esc="title" class="h3 col-5 text-center font-weight-bold" style="margin-top:42px;"/>
         <div class="col-4">
           <div t-raw="left_header"/>
           <div t-if="report_type == 'pdf'" class="text-muted">
