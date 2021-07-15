@@ -10,7 +10,12 @@
             <div class="col-6" t-if="o.partner_id">
               <p>
                 <strong>Cliente: </strong><span class="m-0" t-field="o.partner_id"/><br/>
-                <strong>R.I.F.: </strong><span class="m-0" t-field="o.identification_id1"/><br/>
+               <t t-if="o.rif">     
+                <strong>R.I.F.: </strong><span class="m-0" t-field="o.rif"/><br/>             
+               </t>
+            <t t-else="">
+<strong>Documento de Identidad: </strong><span class="m-0" t-field="o.identification_id1"/><br/>               
+             </t>
                 <strong>Dirección Fiscal: </strong><span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/> <span t-field="o.partner_id.city"/> <span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.municipality_id.name"/> <span t-field="o.partner_id.parish_id.name"/> <span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.country_id"/><br/>
                 <strong>Teléfonos: </strong><span t-field="o.partner_id.phone"/><br/>
                 <strong>Dirección de Entrega: </strong><span t-field="o.partner_shipping_id.street"/> <span t-field="o.partner_shipping_id.street2"/> <span t-field="o.partner_shipping_id.city"/> <span t-field="o.partner_shipping_id.state_id.name"/> <span t-field="o.partner_shipping_id.municipality_id.name"/> <span t-field="o.partner_shipping_id.parish_id.name"/> <span t-field="o.partner_shipping_id.zip"/> <span t-field="o.partner_shipping_id.country_id"/>
@@ -18,7 +23,6 @@
             </div>
             <div class="col-6">
               <h5 class="text-uppercase font-weight-bold">
-                <span t-if="o.type == 'out_invoice' and o.state == 'posted'">Factura</span>
                 <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Factura Borrador</span>
                 <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Factura Cancelada</span>
                 <span t-if="o.type == 'out_refund'">Nota de Crédito</span>
@@ -244,7 +248,12 @@
             <div class="col-6" t-if="o.partner_id">
               <p>
                 <strong>Cliente: </strong><span class="m-0" t-field="o.partner_id"/><br/>
-                <strong>R.I.F.: </strong><span class="m-0" t-field="o.identification_id1"/><br/>
+               <t t-if="o.rif">     
+                <strong>R.I.F.: </strong><span class="m-0" t-field="o.rif"/><br/>             
+               </t>
+            <t t-else="">
+<strong>Documento de Identidad: </strong><span class="m-0" t-field="o.identification_id1"/><br/>               
+             </t>
                 <strong>Dirección Fiscal: </strong><span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/> <span t-field="o.partner_id.city"/> <span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.municipality_id.name"/> <span t-field="o.partner_id.parish_id.name"/> <span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.country_id"/><br/>
                 <strong>Teléfonos: </strong><span t-field="o.partner_id.phone"/><br/>
                 <strong>Dirección de Entrega: </strong><span t-field="o.partner_shipping_id.street"/> <span t-field="o.partner_shipping_id.street2"/> <span t-field="o.partner_shipping_id.city"/> <span t-field="o.partner_shipping_id.state_id.name"/> <span t-field="o.partner_shipping_id.municipality_id.name"/> <span t-field="o.partner_shipping_id.parish_id.name"/> <span t-field="o.partner_shipping_id.zip"/> <span t-field="o.partner_shipping_id.country_id"/>
@@ -252,7 +261,7 @@
             </div>
             <div class="col-6">
               <h5 class="text-uppercase font-weight-bold">
-                <span t-if="o.type == 'out_invoice' and o.state == 'posted'">Factura</span>
+
                 <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Factura Borrador</span>
                 <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Factura Cancelada</span>
                 <span t-if="o.type == 'out_refund'">Nota de Crédito</span>
