@@ -17,7 +17,16 @@ class account_invoice(models.Model):
                 inv.amount_by_group_currency = inv.amount_total - inv.amount_untaxed
                 inv.amount_untaxed_currency = inv.amount_untaxed
 
+    @api.depends('invoice_date', 'currency_id')
+    def get_report_rate(self):
+        for inv in self:
+            rates = self.company_currency_id.rate_ids
+            for r in rates:
+                if r.name == inv.invoice_date:
+                    return float(r.rate)
+                else:
+                    return float(0)
+
     amount_total_currency = fields.Monetary(string='Total currency', compute='_compute_amount_currency')
     amount_by_group_currency = fields.Monetary(string='Total tax currency', compute='_compute_amount_currency')
     amount_untaxed_currency = fields.Monetary(string='Total untaxed', compute='_compute_amount_currency')
-
