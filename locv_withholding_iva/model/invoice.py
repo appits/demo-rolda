@@ -69,7 +69,7 @@ class AccountMove(models.Model):
             if self.state == 'posted':
                 for ilids in self.invoice_line_ids:
                     self.check_document_date()
-                    self.check_invoice_dates()
+                    #self.check_invoice_dates()
                     apply = self.check_wh_apply()
                     if apply == True:
                         self.check_withholdable()
@@ -92,7 +92,7 @@ class AccountMove(models.Model):
                       'en estado publicado.'))
         return True
 
-
+    '''
     def check_invoice_dates(self):
         """
         check that the date document is less or equal than the date invoice.
@@ -107,7 +107,7 @@ class AccountMove(models.Model):
                     _('The document date must be less or equal than the'
                       ' invoice date.'))
         return True
-
+    '''
 
 
     # def copy(self, default=None):
