@@ -14,7 +14,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
-        'data/company_data.xml',
+        # ~ 'data/company_data.xml',
         'data/sequence_data.xml',
         'views/assets.xml',
         'views/invoice_view.xml',
