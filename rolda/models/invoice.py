@@ -21,11 +21,13 @@ class account_invoice(models.Model):
     def get_report_rate(self):
         for inv in self:
             rates = self.company_currency_id.rate_ids
+            rate = float(0)
+            
             for r in rates:
                 if r.name == inv.invoice_date:
-                    return float(r.rate)
-                else:
-                    return float(0)
+                    rate= float(r.rate)
+        return rate
+              
 
     amount_total_currency = fields.Monetary(string='Total currency', compute='_compute_amount_currency')
     amount_by_group_currency = fields.Monetary(string='Total tax currency', compute='_compute_amount_currency')
