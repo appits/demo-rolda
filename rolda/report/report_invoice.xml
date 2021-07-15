@@ -228,7 +228,7 @@
           <div class="clearfix" style="font-size: 10px">
             <div class="clearfix text-left">
               <p t-if="o.currency_id != o.company_currency_id"  class="bg-light">Los valores expresados en Dólares estan calculados a la tasa oficial de
-              Bs. <span t-field="o.company_currency_id.rate"/> vigente para la fecha de su emisión, de conformidad a lo establecido en el numeral 14 del articulo 13
+              Bs. <span t-esc="o.get_report_rate()" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/> vigente para la fecha de su emisión, de conformidad a lo establecido en el numeral 14 del articulo 13
               de la providencia Administrativa Nº 0071 emanada del servicio Nacional Integrado de Administracion Aduanera y Tributaria (SENIAT), Vigente y publicada
               en la Gaceta Oficial Nº 39.795 del 8 de Noviembre del 2.011. En caso de cancelar su equivalente en Bs. deberá realizarlo según la tasa B.C.V vigente del
               día del pago.
